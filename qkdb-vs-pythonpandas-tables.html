@@ -463,7 +463,7 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
-<span class="o">...</span>     <span class="n">ints</span><span class="o">=</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+<span class="o">...</span>     <span class="n">ints</span><span class="o">=</span><span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
 <span class="o">...</span>     <span class="n">strs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;san&#39;</span><span class="p">],</span>
 <span class="o">...</span>     <span class="n">flts</span><span class="o">=</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
 <span class="o">...</span>     <span class="p">))</span>
@@ -611,8 +611,54 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 </tbody>
 </table>
 </div>
-<div class="section" id="table-to-dictionary">
-<h2>Table to dictionary<a class="headerlink" href="#table-to-dictionary" title="Permalink to this headline">*</a></h2>
+<div class="section" id="gotchas-missing-column">
+<h2>Gotchas: missing column<a class="headerlink" href="#gotchas-missing-column" title="Permalink to this headline">*</a></h2>
+<p>Be careful when selecting columns like you would from a dictionary (which is what tables are).
+Similar to <a class="reference external" href="qkdb-vs-python-dictionaries.html#dict-missing-keys">dictionaries</a>, missing
+columns will return an empty list of the first column's type.</p>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="kd">exec</span><span class="w"> </span><span class="n">notHere</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="o">&#39;</span><span class="n">notHere</span><span class="w"></span>
+<span class="w">  </span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="kd">exec</span><span class="w"> </span><span class="n">notHere</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<span class="w">       </span><span class="o">^</span><span class="p"></span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;</span><span class="n">c</span><span class="o">!</span><span class="n">c</span><span class="o">:</span><span class="ss">`ints`notHere</span><span class="p">]</span><span class="w"></span>
+<span class="o">&#39;</span><span class="n">notHere</span><span class="w"></span>
+<span class="w">  </span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;</span><span class="n">c</span><span class="o">!</span><span class="vg">c</span><span class="o">:</span><span class="ss">`ints`notHere</span><span class="p">]</span><span class="w"></span>
+<span class="w">       </span><span class="o">^</span><span class="p"></span>
+
+<span class="gp">q)</span><span class="n">t</span><span class="ss">`notHere</span><span class="w"></span>
+<span class="ss">`long</span><span class="o">$</span><span class="p">()</span>
+
+<span class="gp">q)</span><span class="p">([]</span><span class="n">bool</span><span class="o">:</span><span class="mb">010b</span><span class="p">)</span><span class="ss">`notHere</span><span class="w"></span>
+<span class="ss">`boolean</span><span class="o">$</span><span class="p">()</span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;not_here&#39;</span><span class="p">]</span>
+<span class="ne">KeyError</span><span class="p">:</span> <span class="s1">&#39;not_here&#39;</span>
+
+
+
+
+
+
+
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">not_here</span>
+<span class="ne">AttributeError</span><span class="p">:</span> <span class="s1">&#39;DataFrame&#39;</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s1">&#39;not_here&#39;</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="table-to-dictionary-of-lists">
+<h2>Table to dictionary of lists<a class="headerlink" href="#table-to-dictionary-of-lists" title="Permalink to this headline">*</a></h2>
 <p>If you're doing this in python, you're probably doing something wrong.</p>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
@@ -642,6 +688,151 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;ints&#39;</span><span class="p">,</span> <span class="s1">&#39;strs&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="o">.</span><span class="n">itmes</span><span class="p">()}</span>
 <span class="p">{</span><span class="s1">&#39;ints&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span>
  <span class="s1">&#39;strs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;san&#39;</span><span class="p">]}</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="table-to-dictionary-of-one-column-to-another">
+<h2>Table to dictionary of one column to another<a class="headerlink" href="#table-to-dictionary-of-one-column-to-another" title="Permalink to this headline">*</a></h2>
+<p>Make sure your key column is unique:</p>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="p">(</span><span class="n">t</span><span class="ss">`ints</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="n">t</span><span class="ss">`syms</span><span class="p">)</span><span class="w"></span>
+<span class="mi">100</span><span class="o">|</span><span class="w"> </span><span class="n">one</span><span class="p"></span>
+<span class="mi">200</span><span class="o">|</span><span class="w"> </span><span class="n">two</span><span class="p"></span>
+<span class="mi">300</span><span class="o">|</span><span class="w"> </span><span class="n">san</span><span class="p"></span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;ints&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strs</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="p">{</span><span class="mi">100</span><span class="p">:</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="mi">200</span><span class="p">:</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">:</span> <span class="s1">&#39;san&#39;</span><span class="p">}</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+<p>... or else:</p>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">u</span><span class="o">:</span><span class="p">([]</span><span class="w"> </span><span class="n">k</span><span class="o">:</span><span class="ss">`a`a`b</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="ss">`one`two`san</span><span class="p">)</span><span class="w"></span>
+
+<span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="n">t</span><span class="ss">`k</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="n">t</span><span class="ss">`v</span><span class="p">)</span><span class="w"></span>
+
+<span class="gp">q)</span><span class="n">d</span><span class="w"></span>
+<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="n">one</span><span class="p"></span>
+<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="n">two</span><span class="w">  </span><span class="c1">// `two is not accessible with: d[`a]</span><span class="p"></span>
+<span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="n">san</span><span class="p"></span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">du</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;aab&quot;</span><span class="p">),</span> <span class="n">v</span><span class="o">=</span><span class="s2">&quot;one two san&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
+<span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;san&#39;</span><span class="p">}</span>  <span class="c1"># we lost &#39;one&#39;</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="append-to-a-table">
+<h2>Append to a table<a class="headerlink" href="#append-to-a-table" title="Permalink to this headline">*</a></h2>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">// Prepare a dict, a one-row table, and a list</span><span class="p"></span>
+
+<span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="ss">`ints`syms`flts</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="mi">777</span><span class="p">;</span><span class="ss">`svn</span><span class="p">;</span><span class="mf">7.7</span><span class="p">)</span><span class="w"></span>
+<span class="gp">q)</span><span class="n">d</span><span class="w"></span>
+<span class="n">ints</span><span class="o">|</span><span class="w"> </span><span class="mi">777</span><span class="p"></span>
+<span class="n">syms</span><span class="o">|</span><span class="w"> </span><span class="ss">`svn</span><span class="p"></span>
+<span class="n">flts</span><span class="o">|</span><span class="w"> </span><span class="mf">7.7</span><span class="p"></span>
+
+<span class="gp">q)</span><span class="n">r</span><span class="o">:</span><span class="k">enlist</span><span class="w"> </span><span class="n">d</span><span class="w"></span>
+<span class="gp">q)</span><span class="n">r</span><span class="w"></span>
+<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
+<span class="o">--------------</span><span class="p"></span>
+<span class="mi">777</span><span class="w">  </span><span class="n">svn</span><span class="w">  </span><span class="mf">7.7</span><span class="p"></span>
+
+<span class="gp">q)</span><span class="n">l</span><span class="o">:</span><span class="k">value</span><span class="w"> </span><span class="n">d</span><span class="w"></span>
+<span class="gp">q)</span><span class="n">l</span><span class="w"></span>
+<span class="mi">777</span><span class="p"></span>
+<span class="ss">`svn</span><span class="p"></span>
+<span class="mf">7.7</span><span class="p"></span>
+
+<span class="c1">// Start appending</span><span class="p"></span>
+
+<span class="gp">q)</span><span class="n">t</span><span class="o">,</span><span class="n">d</span><span class="w">          </span><span class="c1">// join with a dict</span><span class="w"></span>
+<span class="gp">q)</span><span class="n">t</span><span class="o">,</span><span class="n">r</span><span class="w">          </span><span class="c1">// join with a 1-row table</span><span class="w"></span>
+<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
+<span class="o">--------------</span><span class="p"></span>
+<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="p"></span>
+<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="p"></span>
+<span class="mi">300</span><span class="w">  </span><span class="n">san</span><span class="w">  </span><span class="mf">0.2</span><span class="p"></span>
+<span class="mi">777</span><span class="w">  </span><span class="n">svn</span><span class="w">  </span><span class="mf">7.7</span><span class="p"></span>
+
+<span class="gp">q)</span><span class="n">t</span><span class="o">,:</span><span class="n">l</span><span class="w">         </span><span class="c1">// join-in-place with a list</span><span class="w"></span>
+<span class="gp">q)</span><span class="n">t</span><span class="w"></span>
+<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
+<span class="o">--------------</span><span class="p"></span>
+<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="p"></span>
+<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="p"></span>
+<span class="mi">300</span><span class="w">  </span><span class="n">san</span><span class="w">  </span><span class="mf">0.2</span><span class="p"></span>
+<span class="mi">777</span><span class="w">  </span><span class="n">svn</span><span class="w">  </span><span class="mf">7.7</span><span class="p"></span>
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="c1"># Prepare a dict, a one-row table, and a list</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ints</span><span class="o">=</span><span class="mi">777</span><span class="p">,</span> <span class="n">strs</span><span class="o">=</span><span class="s1">&#39;svn&#39;</span><span class="p">,</span> <span class="n">flts</span><span class="o">=</span><span class="mf">7.7</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
+<span class="p">{</span><span class="s1">&#39;ints&#39;</span><span class="p">:</span> <span class="mi">777</span><span class="p">,</span> <span class="s1">&#39;strs&#39;</span><span class="p">:</span> <span class="s1">&#39;svn&#39;</span><span class="p">,</span> <span class="s1">&#39;flts&#39;</span><span class="p">:</span> <span class="mf">7.7</span><span class="p">}</span>
+
+
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">([</span><span class="n">d</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r</span>
+   <span class="n">ints</span> <span class="n">strs</span>  <span class="n">flts</span>
+<span class="o">------------------</span>
+<span class="mi">0</span>   <span class="mi">777</span>  <span class="n">svn</span>   <span class="mf">7.7</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="mi">777</span><span class="p">,</span> <span class="s1">&#39;svn&#39;</span><span class="p">,</span> <span class="mf">7.7</span><span class="p">]</span>
+
+
+
+<span class="c1"># Start appending</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+   <span class="n">ints</span> <span class="n">strs</span>  <span class="n">flts</span>
+<span class="o">------------------</span>
+<span class="mi">0</span>   <span class="mi">100</span>  <span class="n">one</span>   <span class="mf">0.0</span>
+<span class="mi">1</span>   <span class="mi">200</span>  <span class="n">two</span>   <span class="mf">0.1</span>
+<span class="mi">2</span>   <span class="mi">300</span>  <span class="n">san</span>   <span class="mf">0.2</span>
+<span class="mi">3</span>   <span class="mi">777</span>  <span class="n">svn</span>   <span class="mf">7.7</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)]</span> <span class="o">=</span> <span class="n">l</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+   <span class="n">ints</span> <span class="n">strs</span>  <span class="n">flts</span>
+<span class="o">------------------</span>
+<span class="mi">0</span>   <span class="mi">100</span>  <span class="n">one</span>   <span class="mf">0.0</span>
+<span class="mi">1</span>   <span class="mi">200</span>  <span class="n">two</span>   <span class="mf">0.1</span>
+<span class="mi">2</span>   <span class="mi">300</span>  <span class="n">san</span>   <span class="mf">0.2</span>
+<span class="mi">3</span>   <span class="mi">777</span>  <span class="n">svn</span>   <span class="mf">7.7</span>
 </pre></div>
 </div></td>
 </tr>
@@ -696,8 +887,8 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 </tbody>
 </table>
 </div>
-<div class="section" id="adding-columns-from-existing-ones">
-<h2>Adding columns from existing ones<a class="headerlink" href="#adding-columns-from-existing-ones" title="Permalink to this headline">*</a></h2>
+<div class="section" id="adding-new-columns">
+<h2>Adding new columns<a class="headerlink" href="#adding-new-columns" title="Permalink to this headline">*</a></h2>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
 <col width="49%" />
