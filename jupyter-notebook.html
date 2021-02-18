@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>gshiba.github.io - Categories | gshiba.github.io</title>
+        <title>Jupyter Notebook | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -424,11 +424,139 @@ h2:hover a.headerlink, h3:hover a.headerlink {
         </header>
 
         <div id="wrap">
-    <h1>Categories on gshiba.github.io</h1>
-    <ul>
-        <li><a href="/category/qkdb-vs-python-for-pythonpandas-users.html">q/KDB+ vs Python for Python/pandas users</a> (6)</li>
-        <li><a href="/category/vim-map-jk-to-esc-everywhere.html">vim map jk to Esc everywhere</a> (3)</li>
-    </ul>
+<div class="container post">
+    <article>
+        <header>
+            <h1>Jupyter Notebook</h1>
+            <time datetime="article.date.isoformat()" pubdate>Feb 2021</time>
+        </header>
+
+        <div class="article_content">
+            <div class="section" id="tl-dr">
+<h2>tl;dr<a class="headerlink" href="#tl-dr" title="Permalink to this headline">*</a></h2>
+<p>Put <a class="reference external" href="https://gist.github.com/gshiba/6b1c0b3689fd218ad8b2243d2944a689">this</a> in your <code>~/.jupyter/custom/custom.js</code>.</p>
+</div>
+<div class="section" id="my-desired-behavior">
+<h2>My desired behavior<a class="headerlink" href="#my-desired-behavior" title="Permalink to this headline">*</a></h2>
+<p>Here's my desired behavior in Jupyter Notebook.</p>
+<div class="highlight"><pre><span></span>+------------------------------------+
+<span class="p">|</span>       Notebook <span class="nb">command</span> mode        <span class="p">|</span>
+<span class="p">|</span>   <span class="o">(</span>interact with notebook cells<span class="o">)</span>   <span class="p">|</span>
++------------------------------------+
+<span class="p">|</span>   * j/k   Next/previous cell       <span class="p">|</span>
+<span class="p">|</span>   * a/b   Insert cell above/below  <span class="p">|</span>
+<span class="p">|</span>   * c/x/v Copy/cut/paste cell      <span class="p">|</span>
+<span class="p">|</span>   * ...                            <span class="p">|</span>
++------------------------------------+
+
+                <span class="p">|</span>   ^
+          Enter <span class="p">|</span>   <span class="p">|</span>  Esc
+                v   <span class="p">|</span>
+
++------------------------------------+
+<span class="p">|</span>          Vim <span class="nb">command</span> mode          <span class="p">|</span>
+<span class="p">|</span>            <span class="o">(</span>in a cell<span class="o">)</span>             <span class="p">|</span>
++------------------------------------+
+<span class="p">|</span>  * jkhl Move d/u/l/r               <span class="p">|</span>
+<span class="p">|</span>  * yy   Yank current line          <span class="p">|</span>
+<span class="p">|</span>  * p    Paste                      <span class="p">|</span>
+<span class="p">|</span>  * gg   Jump to first line in cell <span class="p">|</span>
+<span class="p">|</span>  * /    Search                     <span class="p">|</span>
+<span class="p">|</span>  * ...                             <span class="p">|</span>
++------------------------------------+
+
+                <span class="p">|</span>   ^
+        oOiIcCs <span class="p">|</span>   <span class="p">|</span>  jk or Esc
+                v   <span class="p">|</span>
+
++------------------------------------+
+<span class="p">|</span>           Vim insert mode          <span class="p">|</span>
++------------------------------------+
+</pre></div>
+</div>
+<div class="section" id="details">
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">*</a></h2>
+<p>This <a class="reference external" href="https://gist.github.com/gshiba/6b1c0b3689fd218ad8b2243d2944a689">custom.js</a> will:</p>
+<ol class="arabic simple">
+<li>Enable CodeMirror's Vim binding</li>
+<li>Create menu items in Jupyter Notebook frontend so you can choose between default and vi mode (optional)</li>
+<li>Customize CodeMirror to enable the transition from [Vim command mode] to [Notebook command mode]</li>
+<li>Customize CodeMirror to map jk to Esc</li>
+</ol>
+<p>Place it in your <code>~/.jupyter/custom/custom.js</code>.</p>
+</div>
+<div class="section" id="appendix-and-credit">
+<h2>Appendix and credit<a class="headerlink" href="#appendix-and-credit" title="Permalink to this headline">*</a></h2>
+<p>I started on IPython Notebook, which later became Jupyter Notebook, and when I
+wanted to use vim bindings in it, I relied on the
+<a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions">jupyter_contrib_nbextensions</a>'s <a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tree/master/src/jupyter_contrib_nbextensions/nbextensions/select_keymap">select_keymap</a> extension (I forked it to remap jk).</p>
+<p>Fast-forward to today (2020) with a new job and a fresh hardward to install stuff on,
+I find that activity on the nbextensions repo has mostly died down since
+<a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions/graphs/code-frequency">2018</a>. I didn't want to install an un-maintained package with many extensions
+that I don't use, so I pulled out just the ones I needed.</p>
+<p>Based on git blame, credit goes to <a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions/blame/master/src/jupyter_contrib_nbextensions/nbextensions/select_keymap/main.js">&#64;aiguofer</a> for this extension. Thanks!</p>
+</div>
+
+        </div>
+
+        <div class="meta">
+            <div>
+            </div>
+        </div>
+    </article>
+
+
+</div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
         </div>
 <!--
     <footer>

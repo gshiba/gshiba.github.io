@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>q/KDB+ vs Python/pandas: Table Joins | gshiba.github.io</title>
+        <title>Lists | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -427,8 +427,8 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 <div class="container post">
     <article>
         <header>
-            <h1>q/KDB+ vs Python/pandas: Table Joins</h1>
-            <time datetime="article.date.isoformat()" pubdate>September 2020</time>
+            <h1>Lists</h1>
+            <time datetime="article.date.isoformat()" pubdate>Sep 2020</time>
         </header>
 
         <div class="article_content">
@@ -448,130 +448,112 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">t1</span><span class="o">:</span><span class="p">([]</span><span class="n">k1</span><span class="o">:</span><span class="ss">`a`b`c</span><span class="p">;</span><span class="w"> </span><span class="n">v1</span><span class="o">:</span><span class="k">til</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)x:1 2 3
+q)x
+1 2 3
 
-<span class="gp">q)</span><span class="n">t2</span><span class="o">:</span><span class="p">([]</span><span class="n">k2</span><span class="o">:</span><span class="ss">`a`X`c</span><span class="p">;</span><span class="w"> </span><span class="n">v2</span><span class="o">:</span><span class="mi">3</span><span class="o">+</span><span class="k">til</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
-
-<span class="gp">q)</span><span class="n">t1</span><span class="w"></span>
-<span class="n">k1</span><span class="w"> </span><span class="n">v1</span><span class="p"></span>
-<span class="o">-----</span><span class="p"></span>
-<span class="n">a</span><span class="w">  </span><span class="mi">0</span><span class="p"></span>
-<span class="n">b</span><span class="w">  </span><span class="mi">1</span><span class="p"></span>
-<span class="n">c</span><span class="w">  </span><span class="mi">2</span><span class="p"></span>
-
-<span class="gp">q)</span><span class="n">t2</span><span class="w"></span>
-<span class="n">k2</span><span class="w"> </span><span class="n">v2</span><span class="p"></span>
-<span class="o">-----</span><span class="p"></span>
-<span class="n">a</span><span class="w">  </span><span class="mi">3</span><span class="p"></span>
-<span class="n">X</span><span class="w">  </span><span class="mi">4</span><span class="p"></span>
-<span class="n">c</span><span class="w">  </span><span class="mi">5</span><span class="p"></span>
+q)til 5
+0 1 2 3 4
 </pre></div>
 </div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">),</span> <span class="n">v1</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">dg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">k2</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;aXc&#39;</span><span class="p">),</span> <span class="n">v2</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)))</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
-  <span class="n">k1</span>  <span class="n">v1</span>
-<span class="o">--------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">dg</span>
-  <span class="n">k2</span>  <span class="n">v2</span>
-<span class="o">--------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">3</span>
-<span class="mi">1</span>  <span class="n">X</span>   <span class="mi">4</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="join-and-concatenate">
-<h2>Join and Concatenate<a class="headerlink" href="#join-and-concatenate" title="Permalink to this headline">*</a></h2>
+<div class="section" id="process-items-in-a-list">
+<h2>Process items in a list<a class="headerlink" href="#process-items-in-a-list" title="Permalink to this headline">*</a></h2>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
 <col width="49%" />
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">// left-join</span><span class="p"></span>
-<span class="gp">q)</span><span class="n">t1</span><span class="w"> </span><span class="ow">lj</span><span class="w"> </span><span class="ss">`k1</span><span class="w"> </span><span class="ow">xkey</span><span class="w"> </span><span class="ss">`k1</span><span class="w"> </span><span class="ow">xcol</span><span class="w"> </span><span class="n">t2</span><span class="w"></span>
-<span class="n">k1</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="n">v2</span><span class="p"></span>
-<span class="o">--------</span><span class="p"></span>
-<span class="n">a</span><span class="w">  </span><span class="mi">0</span><span class="w">  </span><span class="mi">3</span><span class="p"></span>
-<span class="n">b</span><span class="w">  </span><span class="mi">1</span><span class="p"></span>
-<span class="n">c</span><span class="w">  </span><span class="mi">2</span><span class="w">  </span><span class="mi">5</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)5 + 10 * til 3
+0 15 25
 
-<span class="c1">// concat side-by-side</span><span class="p"></span>
-<span class="gp">q)</span><span class="n">t1</span><span class="w"> </span><span class="o">,&#39;</span><span class="w"> </span><span class="n">t2</span><span class="w"></span>
-<span class="n">k1</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="n">k2</span><span class="w"> </span><span class="n">v2</span><span class="p"></span>
-<span class="o">-----------</span><span class="p"></span>
-<span class="n">a</span><span class="w">  </span><span class="mi">0</span><span class="w">  </span><span class="n">a</span><span class="w">  </span><span class="mi">3</span><span class="p"></span>
-<span class="n">b</span><span class="w">  </span><span class="mi">1</span><span class="w">  </span><span class="n">X</span><span class="w">  </span><span class="mi">4</span><span class="p"></span>
-<span class="n">c</span><span class="w">  </span><span class="mi">2</span><span class="w">  </span><span class="n">c</span><span class="w">  </span><span class="mi">5</span><span class="p"></span>
+q)zeroIfEven:{?[0=x mod 2;0;x]}
 
-<span class="c1">// concat one-below-the-other</span><span class="p"></span>
-<span class="gp">q)</span><span class="n">t1</span><span class="o">,</span><span class="w"> </span><span class="ss">`k1`v1</span><span class="w"> </span><span class="ow">xcol</span><span class="w"> </span><span class="n">t2</span><span class="w"></span>
 
-<span class="n">k1</span><span class="w"> </span><span class="n">v1</span><span class="p"></span>
-<span class="o">-----</span><span class="p"></span>
-<span class="n">a</span><span class="w">  </span><span class="mi">0</span><span class="p"></span>
-<span class="n">b</span><span class="w">  </span><span class="mi">1</span><span class="p"></span>
-<span class="n">c</span><span class="w">  </span><span class="mi">2</span><span class="p"></span>
-<span class="n">a</span><span class="w">  </span><span class="mi">3</span><span class="p"></span>
-<span class="n">X</span><span class="w">  </span><span class="mi">4</span><span class="p"></span>
-<span class="n">c</span><span class="w">  </span><span class="mi">5</span><span class="p"></span>
-
-<span class="c1">// concat side-by-side with dup col names</span><span class="p"></span>
-<span class="c1">// (second table wins)</span><span class="p"></span>
-<span class="gp">q)</span><span class="n">t1</span><span class="w"> </span><span class="o">,&#39;</span><span class="w"> </span><span class="ss">`k1`v1</span><span class="w"> </span><span class="ow">xcol</span><span class="w"> </span><span class="n">t2</span><span class="w"></span>
-<span class="n">k1</span><span class="w"> </span><span class="n">v1</span><span class="p"></span>
-<span class="o">-----</span><span class="p"></span>
-<span class="n">a</span><span class="w">  </span><span class="mi">3</span><span class="p"></span>
-<span class="n">X</span><span class="w">  </span><span class="mi">4</span><span class="p"></span>
-<span class="n">c</span><span class="w">  </span><span class="mi">5</span><span class="p"></span>
+q)zeroIfEven til 10
+0 1 0 3 0 5 0 7 0 9
 </pre></div>
 </div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="c1"># left-join</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;k1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dg</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;k2&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-  <span class="n">k1</span>  <span class="n">v1</span>   <span class="n">v2</span>
-<span class="o">-------------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>  <span class="mf">3.0</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>  <span class="n">NaN</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>  <span class="mf">5.0</span>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
 
-<span class="c1"># concat side-by-side</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">dg</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-  <span class="n">k1</span>  <span class="n">v1</span> <span class="n">k2</span>  <span class="n">v2</span>
-<span class="o">---------------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>  <span class="n">a</span>   <span class="mi">3</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>  <span class="n">X</span>   <span class="mi">4</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>  <span class="n">c</span>   <span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">zero_if_even</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span>
 
-<span class="c1"># concat one-below-the-other</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">dg</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">k2</span><span class="o">=</span><span class="s2">&quot;k1&quot;</span><span class="p">,</span> <span class="n">v2</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">))],</span>
-<span class="o">...</span>           <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-  <span class="n">k1</span>  <span class="n">v1</span>
-<span class="o">--------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>
-<span class="mi">3</span>  <span class="n">a</span>   <span class="mi">3</span>
-<span class="mi">4</span>  <span class="n">X</span>   <span class="mi">4</span>
-<span class="mi">5</span>  <span class="n">c</span>   <span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">zero_if_even</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="slice">
+<h2>Slice<a class="headerlink" href="#slice" title="Permalink to this headline">*</a></h2>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)x:`zero`one`two
+q)x 2 0
+`two`zero
 
-<span class="c1"># concat side-by-side with dup col names</span>
-<span class="c1"># (output has duplicated col names; don&#39;t do this)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">dg</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">k2</span><span class="o">=</span><span class="s2">&quot;k1&quot;</span><span class="p">,</span> <span class="n">v2</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">))],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-  <span class="n">k1</span>  <span class="n">v1</span> <span class="n">k1</span>  <span class="n">v1</span>
-<span class="o">---------------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>  <span class="n">a</span>   <span class="mi">3</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>  <span class="n">X</span>   <span class="mi">4</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>  <span class="n">c</span>   <span class="mi">5</span>
+q)reverse x
+`two`one`zero
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="p">[</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;zero&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;zero&#39;</span><span class="p">]</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="filter">
+<h2>Filter<a class="headerlink" href="#filter" title="Permalink to this headline">*</a></h2>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)xs:`zero`one`two`san
+q)bs:1101b
+q)xs where bs
+`zero`one`san
+
+/ Keep evens
+q)x where 0 = (x:til 10) mod 2
+0 2 4 6 8
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;san&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">bs</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">bs</span><span class="p">)</span> <span class="k">if</span> <span class="n">b</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;san&#39;</span><span class="p">]</span>
+
+<span class="c1"># Keep evens</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">_</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
 </pre></div>
 </div></td>
 </tr>
@@ -583,8 +565,6 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 
         <div class="meta">
             <div>
-                    <a href="/tag/qkdb.html" class="tag">q/KDB+</a>
-                    <a href="/tag/python.html" class="tag">python</a>
             </div>
         </div>
     </article>

@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>q/KDB+ vs Python/pandas: Tables | gshiba.github.io</title>
+        <title>Tables | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -427,8 +427,8 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 <div class="container post">
     <article>
         <header>
-            <h1>q/KDB+ vs Python/pandas: Tables</h1>
-            <time datetime="article.date.isoformat()" pubdate>September 2020</time>
+            <h1>Tables</h1>
+            <time datetime="article.date.isoformat()" pubdate>Sep 2020</time>
         </header>
 
         <div class="article_content">
@@ -448,18 +448,18 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">t</span><span class="o">:</span><span class="p">([]</span><span class="w"></span>
-<span class="w">    </span><span class="vg">ints</span><span class="o">:</span><span class="mi">100</span><span class="o">*</span><span class="mi">1</span><span class="o">+</span><span class="k">til</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="vg">syms</span><span class="o">:</span><span class="ss">`one`two`san</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="vg">flts</span><span class="o">:</span><span class="mf">0.1</span><span class="o">*</span><span class="k">til</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-<span class="w">    </span><span class="p">)</span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)t:([]
+    ints:100*1+til 3;
+    syms:`one`two`san;
+    flts:0.1*til 3
+    )
 
-<span class="gp">q)</span><span class="n">t</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
-<span class="o">--------------</span><span class="p"></span>
-<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="p"></span>
-<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="p"></span>
-<span class="mi">300</span><span class="w">  </span><span class="n">san</span><span class="w">  </span><span class="mf">0.2</span><span class="p"></span>
+q)t
+ints syms flts
+--------------
+100  one  0
+200  two  0.1
+300  san  0.2
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
@@ -488,26 +488,26 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="kd">select</span><span class="w"> </span><span class="n">syms</span><span class="o">,</span><span class="w"> </span><span class="n">ints</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="n">syms</span><span class="w"> </span><span class="n">ints</span><span class="p"></span>
-<span class="o">---------</span><span class="p"></span>
-<span class="n">one</span><span class="w">  </span><span class="mi">100</span><span class="p"></span>
-<span class="n">two</span><span class="w">  </span><span class="mi">200</span><span class="p"></span>
-<span class="n">san</span><span class="w">  </span><span class="mi">300</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)select syms, ints from t
+syms ints
+---------
+one  100
+two  200
+san  300
 
-<span class="gp">q)</span><span class="ss">`syms`ints</span><span class="o">#</span><span class="n">t</span><span class="w"></span>
-<span class="n">syms</span><span class="w"> </span><span class="n">ints</span><span class="p"></span>
-<span class="o">---------</span><span class="p"></span>
-<span class="n">one</span><span class="w">  </span><span class="mi">100</span><span class="p"></span>
-<span class="n">two</span><span class="w">  </span><span class="mi">200</span><span class="p"></span>
-<span class="n">san</span><span class="w">  </span><span class="mi">300</span><span class="p"></span>
+q)`syms`ints#t
+syms ints
+---------
+one  100
+two  200
+san  300
 
-<span class="gp">q)</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="ss">`ints</span><span class="p">)</span><span class="o">#</span><span class="n">t</span><span class="w"></span>
-<span class="n">ints</span><span class="p"></span>
-<span class="o">----</span><span class="p"></span>
-<span class="mi">100</span><span class="p"></span>
-<span class="mi">200</span><span class="p"></span>
-<span class="mi">300</span><span class="p"></span>
+q)(enlist `ints)#t
+ints
+----
+100
+200
+300
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;ints&#39;</span><span class="p">,</span> <span class="s1">&#39;strs&#39;</span><span class="p">]]</span>
@@ -545,13 +545,13 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">c</span><span class="o">:</span><span class="ss">`flts`syms</span><span class="w"></span>
-<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;</span><span class="n">c</span><span class="o">!</span><span class="n">c</span><span class="p">]</span><span class="w"></span>
-<span class="n">flts</span><span class="w"> </span><span class="n">syms</span><span class="p"></span>
-<span class="o">---------</span><span class="p"></span>
-<span class="mi">0</span><span class="w">    </span><span class="n">one</span><span class="p"></span>
-<span class="mf">0.1</span><span class="w">  </span><span class="n">two</span><span class="p"></span>
-<span class="mf">0.2</span><span class="w">  </span><span class="n">san</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)c:`flts`syms
+q)?[t;();0b;c!c]
+flts syms
+---------
+0    one
+0.1  two
+0.2  san
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;flts&#39;</span><span class="p">,</span> <span class="s1">&#39;strs&#39;</span><span class="p">]</span>
@@ -575,20 +575,20 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="kd">exec</span><span class="w"> </span><span class="n">flts</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="mf">0</span><span class="w"> </span><span class="mf">0.1</span><span class="w"> </span><span class="mf">0.2</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)exec flts from t
+0 0.1 0.2
 
-<span class="gp">q)</span><span class="n">t</span><span class="ss">`syms</span><span class="w"></span>
-<span class="ss">`one`two`san</span><span class="p"></span>
+q)t`syms
+`one`two`san
 
-<span class="gp">q)</span><span class="n">t</span><span class="ss">`ints`syms</span><span class="w"></span>
-<span class="mi">100</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="mi">300</span><span class="p"></span>
-<span class="ss">`one`two`san</span><span class="p"></span>
+q)t`ints`syms
+100 200 300
+`one`two`san
 
-<span class="gp">q)</span><span class="k">value</span><span class="w"> </span><span class="k">flip</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="mi">100</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="mi">300</span><span class="p"></span>
-<span class="n">one</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">san</span><span class="p"></span>
-<span class="mf">0</span><span class="w">   </span><span class="mf">0.1</span><span class="w"> </span><span class="mf">0.2</span><span class="p"></span>
+q)value flip t
+100 200 300
+one two san
+0   0.1 0.2
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;flts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
@@ -622,21 +622,21 @@ columns will return an empty list of the first column's type.</p>
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="kd">exec</span><span class="w"> </span><span class="n">notHere</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="o">&#39;</span><span class="n">notHere</span><span class="w"></span>
-<span class="w">  </span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="kd">exec</span><span class="w"> </span><span class="n">notHere</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="w">       </span><span class="o">^</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)exec notHere from t
+&#39;notHere
+  [0]  exec notHere from t
+       ^
 
-<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;</span><span class="n">c</span><span class="o">!</span><span class="n">c</span><span class="o">:</span><span class="ss">`ints`notHere</span><span class="p">]</span><span class="w"></span>
-<span class="o">&#39;</span><span class="n">notHere</span><span class="w"></span>
-<span class="w">  </span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;</span><span class="n">c</span><span class="o">!</span><span class="vg">c</span><span class="o">:</span><span class="ss">`ints`notHere</span><span class="p">]</span><span class="w"></span>
-<span class="w">       </span><span class="o">^</span><span class="p"></span>
+q)?[t;();0b;c!c:`ints`notHere]
+&#39;notHere
+  [0]  ?[t;();0b;c!c:`ints`notHere]
+       ^
 
-<span class="gp">q)</span><span class="n">t</span><span class="ss">`notHere</span><span class="w"></span>
-<span class="ss">`long</span><span class="o">$</span><span class="p">()</span>
+q)t`notHere
+`long$()
 
-<span class="gp">q)</span><span class="p">([]</span><span class="n">bool</span><span class="o">:</span><span class="mb">010b</span><span class="p">)</span><span class="ss">`notHere</span><span class="w"></span>
-<span class="ss">`boolean</span><span class="o">$</span><span class="p">()</span>
+q)([]bool:010b)`notHere
+`boolean$()
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;not_here&#39;</span><span class="p">]</span>
@@ -666,18 +666,18 @@ columns will return an empty list of the first column's type.</p>
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="k">flip</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="n">ints</span><span class="o">|</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="mi">300</span><span class="p"></span>
-<span class="n">syms</span><span class="o">|</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">san</span><span class="p"></span>
-<span class="n">flts</span><span class="o">|</span><span class="w"> </span><span class="mf">0</span><span class="w">   </span><span class="mf">0.1</span><span class="w"> </span><span class="mf">0.2</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)flip t
+ints| 100 200 300
+syms| one two san
+flts| 0   0.1 0.2
 
-<span class="gp">q)</span><span class="kd">exec</span><span class="w"> </span><span class="n">ints</span><span class="o">,</span><span class="n">syms</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="n">ints</span><span class="o">|</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="mi">300</span><span class="p"></span>
-<span class="n">syms</span><span class="o">|</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">san</span><span class="p"></span>
+q)exec ints,syms from t
+ints| 100 200 300
+syms| one two san
 
-<span class="gp">q)</span><span class="ss">`ints`syms</span><span class="o">#</span><span class="k">flip</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="n">ints</span><span class="o">|</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="mi">300</span><span class="p"></span>
-<span class="n">syms</span><span class="o">|</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">san</span><span class="p"></span>
+q)`ints`syms#flip t
+ints| 100 200 300
+syms| one two san
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
@@ -704,10 +704,10 @@ columns will return an empty list of the first column's type.</p>
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="p">(</span><span class="n">t</span><span class="ss">`ints</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="n">t</span><span class="ss">`syms</span><span class="p">)</span><span class="w"></span>
-<span class="mi">100</span><span class="o">|</span><span class="w"> </span><span class="n">one</span><span class="p"></span>
-<span class="mi">200</span><span class="o">|</span><span class="w"> </span><span class="n">two</span><span class="p"></span>
-<span class="mi">300</span><span class="o">|</span><span class="w"> </span><span class="n">san</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)(t`ints)!(t`syms)
+100| one
+200| two
+300| san
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;ints&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strs</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
@@ -724,14 +724,14 @@ columns will return an empty list of the first column's type.</p>
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">u</span><span class="o">:</span><span class="p">([]</span><span class="w"> </span><span class="n">k</span><span class="o">:</span><span class="ss">`a`a`b</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="ss">`one`two`san</span><span class="p">)</span><span class="w"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)u:([] k:`a`a`b; v:`one`two`san)
 
-<span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="n">t</span><span class="ss">`k</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="n">t</span><span class="ss">`v</span><span class="p">)</span><span class="w"></span>
+q)d:(t`k)!(t`v)
 
-<span class="gp">q)</span><span class="n">d</span><span class="w"></span>
-<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="n">one</span><span class="p"></span>
-<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="n">two</span><span class="w">  </span><span class="c1">// `two is not accessible with: d[`a]</span><span class="p"></span>
-<span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="n">san</span><span class="p"></span>
+q)d
+a| one
+a| two  // `two is not accessible with: d[`a]
+b| san
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">du</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;aab&quot;</span><span class="p">),</span> <span class="n">v</span><span class="o">=</span><span class="s2">&quot;one two san&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
@@ -754,45 +754,45 @@ columns will return an empty list of the first column's type.</p>
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="c1">// Prepare a dict, a one-row table, and a list</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>// Prepare a dict, a one-row table, and a list
 
-<span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="ss">`ints`syms`flts</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="mi">777</span><span class="p">;</span><span class="ss">`svn</span><span class="p">;</span><span class="mf">7.7</span><span class="p">)</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="w"></span>
-<span class="n">ints</span><span class="o">|</span><span class="w"> </span><span class="mi">777</span><span class="p"></span>
-<span class="n">syms</span><span class="o">|</span><span class="w"> </span><span class="ss">`svn</span><span class="p"></span>
-<span class="n">flts</span><span class="o">|</span><span class="w"> </span><span class="mf">7.7</span><span class="p"></span>
+q)d:(`ints`syms`flts)!(777;`svn;7.7)
+q)d
+ints| 777
+syms| `svn
+flts| 7.7
 
-<span class="gp">q)</span><span class="n">r</span><span class="o">:</span><span class="k">enlist</span><span class="w"> </span><span class="n">d</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">r</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
-<span class="o">--------------</span><span class="p"></span>
-<span class="mi">777</span><span class="w">  </span><span class="n">svn</span><span class="w">  </span><span class="mf">7.7</span><span class="p"></span>
+q)r:enlist d
+q)r
+ints syms flts
+--------------
+777  svn  7.7
 
-<span class="gp">q)</span><span class="n">l</span><span class="o">:</span><span class="k">value</span><span class="w"> </span><span class="n">d</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">l</span><span class="w"></span>
-<span class="mi">777</span><span class="p"></span>
-<span class="ss">`svn</span><span class="p"></span>
-<span class="mf">7.7</span><span class="p"></span>
+q)l:value d
+q)l
+777
+`svn
+7.7
 
-<span class="c1">// Start appending</span><span class="p"></span>
+// Start appending
 
-<span class="gp">q)</span><span class="n">t</span><span class="o">,</span><span class="n">d</span><span class="w">          </span><span class="c1">// join with a dict</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">t</span><span class="o">,</span><span class="n">r</span><span class="w">          </span><span class="c1">// join with a 1-row table</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
-<span class="o">--------------</span><span class="p"></span>
-<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="p"></span>
-<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="p"></span>
-<span class="mi">300</span><span class="w">  </span><span class="n">san</span><span class="w">  </span><span class="mf">0.2</span><span class="p"></span>
-<span class="mi">777</span><span class="w">  </span><span class="n">svn</span><span class="w">  </span><span class="mf">7.7</span><span class="p"></span>
+q)t,d          // join with a dict
+q)t,r          // join with a 1-row table
+ints syms flts
+--------------
+100  one  0
+200  two  0.1
+300  san  0.2
+777  svn  7.7
 
-<span class="gp">q)</span><span class="n">t</span><span class="o">,:</span><span class="n">l</span><span class="w">         </span><span class="c1">// join-in-place with a list</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">t</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
-<span class="o">--------------</span><span class="p"></span>
-<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="p"></span>
-<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="p"></span>
-<span class="mi">300</span><span class="w">  </span><span class="n">san</span><span class="w">  </span><span class="mf">0.2</span><span class="p"></span>
-<span class="mi">777</span><span class="w">  </span><span class="n">svn</span><span class="w">  </span><span class="mf">7.7</span><span class="p"></span>
+q)t,:l         // join-in-place with a list
+q)t
+ints syms flts
+--------------
+100  one  0
+200  two  0.1
+300  san  0.2
+777  svn  7.7
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="c1"># Prepare a dict, a one-row table, and a list</span>
@@ -848,22 +848,22 @@ columns will return an empty list of the first column's type.</p>
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="kd">select</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
-<span class="o">--------------</span><span class="p"></span>
-<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="p"></span>
-<span class="mi">300</span><span class="w">  </span><span class="n">san</span><span class="w">  </span><span class="mf">0.2</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)select from t where i in 0 2
+ints syms flts
+--------------
+100  one  0
+300  san  0.2
 
-<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="k">enlist</span><span class="w"> </span><span class="p">(</span><span class="o">&lt;</span><span class="p">;</span><span class="ss">`ints</span><span class="p">;</span><span class="mi">300</span><span class="p">);</span><span class="mb">0b</span><span class="p">;()]</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
-<span class="o">--------------</span><span class="p"></span>
-<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="p"></span>
-<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="p"></span>
+q)?[t;enlist (&lt;;`ints;300);0b;()]
+ints syms flts
+--------------
+100  one  0
+200  two  0.1
 
-<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;((</span><span class="o">&lt;</span><span class="p">;</span><span class="ss">`ints</span><span class="p">;</span><span class="mi">300</span><span class="p">);(</span><span class="o">&gt;</span><span class="p">;</span><span class="ss">`flts</span><span class="p">;</span><span class="mi">0</span><span class="p">));</span><span class="mb">0b</span><span class="p">;()]</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="p"></span>
-<span class="o">--------------</span><span class="p"></span>
-<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="p"></span>
+q)?[t;((&lt;;`ints;300);(&gt;;`flts;0));0b;()]
+ints syms flts
+--------------
+200  two  0.1
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
@@ -896,14 +896,14 @@ columns will return an empty list of the first column's type.</p>
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">t</span><span class="o">:</span><span class="kd">update</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="n">ints</span><span class="o">*</span><span class="n">flts</span><span class="o">,</span><span class="w"> </span><span class="n">b</span><span class="o">:</span><span class="mi">777</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)t:update a:ints*flts, b:777 from t
 
-<span class="gp">q)</span><span class="n">t</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="w"> </span><span class="n">a</span><span class="w">  </span><span class="n">b</span><span class="p"></span>
-<span class="o">---------------------</span><span class="p"></span>
-<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="w">    </span><span class="mi">0</span><span class="w">  </span><span class="mi">777</span><span class="p"></span>
-<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="w">  </span><span class="mf">20</span><span class="w"> </span><span class="mf">777</span><span class="p"></span>
-<span class="mi">300</span><span class="w">  </span><span class="n">san</span><span class="w">  </span><span class="mf">0.2</span><span class="w">  </span><span class="mf">60</span><span class="w"> </span><span class="mf">777</span><span class="p"></span>
+q)t
+ints syms flts a  b
+---------------------
+100  one  0    0  777
+200  two  0.1  20 777
+300  san  0.2  60 777
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">ints</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">flts</span>
@@ -933,24 +933,24 @@ row at a time).</p>
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">even</span><span class="o">:</span><span class="p">{</span><span class="mi">0</span><span class="o">=</span><span class="n">x</span><span class="w"> </span><span class="ow">mod</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)even:{0=x mod 2}
 
-<span class="gp">q)</span><span class="n">strJoin</span><span class="o">:</span><span class="p">{(</span><span class="k">string</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="o">,</span><span class="k">string</span><span class="w"> </span><span class="n">y</span><span class="p">}</span><span class="w"></span>
+q)strJoin:{(string x),string y}
 
-<span class="gp">q)</span><span class="n">total</span><span class="o">:</span><span class="p">{</span><span class="k">sum</span><span class="p">(</span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"> </span><span class="n">z</span><span class="p">)}</span><span class="w"></span>
+q)total:{sum(x; y; z)}
 
-<span class="gp">q)</span><span class="n">t</span><span class="o">:</span><span class="kd">update</span><span class="w"></span>
-<span class="w">    </span><span class="vg">e</span><span class="o">:</span><span class="n">even</span><span class="w"> </span><span class="n">ints</span><span class="o">%</span><span class="mi">100</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="vg">s</span><span class="o">:</span><span class="n">strJoin</span><span class="o">&#39;</span><span class="p">[</span><span class="n">ints</span><span class="p">;</span><span class="n">syms</span><span class="p">]</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="vg">t</span><span class="o">:</span><span class="n">total</span><span class="p">[</span><span class="n">ints</span><span class="p">;</span><span class="n">flts</span><span class="p">;</span><span class="n">flts</span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="p"></span>
+q)t:update
+    e:even ints%100,
+    s:strJoin&#39;[ints;syms],
+    t:total[ints;flts;flts]
+    from t
 
-<span class="gp">q)</span><span class="n">t</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">s</span><span class="w">        </span><span class="n">t</span><span class="p"></span>
-<span class="o">-------------------------------</span><span class="p"></span>
-<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="w">    </span><span class="mi">0</span><span class="w"> </span><span class="s">&quot;100one&quot;</span><span class="w"> </span><span class="mi">100</span><span class="p"></span>
-<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="w">  </span><span class="mf">1</span><span class="w"> </span><span class="s">&quot;200two&quot;</span><span class="w"> </span><span class="mf">200.2</span><span class="p"></span>
-<span class="mi">300</span><span class="w">  </span><span class="n">san</span><span class="w">  </span><span class="mf">0.2</span><span class="w">  </span><span class="mf">0</span><span class="w"> </span><span class="s">&quot;300san&quot;</span><span class="w"> </span><span class="mf">300.4</span><span class="p"></span>
+q)t
+ints syms flts e s        t
+-------------------------------
+100  one  0    0 &quot;100one&quot; 100
+200  two  0.1  1 &quot;200two&quot; 200.2
+300  san  0.2  0 &quot;300san&quot; 300.4
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">starmap</span>
@@ -987,22 +987,22 @@ types (<a class="reference external" href="https://code.kx.com/q/basics/datatype
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">t</span><span class="w"></span>
-<span class="n">ints</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="n">flts</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">s</span><span class="w">        </span><span class="n">t</span><span class="p"></span>
-<span class="o">-------------------------------</span><span class="p"></span>
-<span class="mi">100</span><span class="w">  </span><span class="n">one</span><span class="w">  </span><span class="mi">0</span><span class="w">    </span><span class="mi">0</span><span class="w"> </span><span class="s">&quot;100one&quot;</span><span class="w"> </span><span class="mi">100</span><span class="p"></span>
-<span class="mi">200</span><span class="w">  </span><span class="n">two</span><span class="w">  </span><span class="mf">0.1</span><span class="w">  </span><span class="mf">1</span><span class="w"> </span><span class="s">&quot;200two&quot;</span><span class="w"> </span><span class="mf">200.2</span><span class="p"></span>
-<span class="mi">300</span><span class="w">  </span><span class="n">san</span><span class="w">  </span><span class="mf">0.2</span><span class="w">  </span><span class="mf">0</span><span class="w"> </span><span class="s">&quot;300san&quot;</span><span class="w"> </span><span class="mf">300.4</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)t
+ints syms flts e s        t
+-------------------------------
+100  one  0    0 &quot;100one&quot; 100
+200  two  0.1  1 &quot;200two&quot; 200.2
+300  san  0.2  0 &quot;300san&quot; 300.4
 
-<span class="gp">q)</span><span class="k">meta</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="n">c</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">a</span><span class="p"></span>
-<span class="o">----|</span><span class="w"> </span><span class="o">-----</span><span class="p"></span>
-<span class="n">ints</span><span class="o">|</span><span class="w"> </span><span class="n">j</span><span class="p"></span>
-<span class="n">syms</span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="p"></span>
-<span class="n">flts</span><span class="o">|</span><span class="w"> </span><span class="n">f</span><span class="p"></span>
-<span class="n">e</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">b</span><span class="p"></span>
-<span class="n">s</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">C</span><span class="p"></span>
-<span class="n">t</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">f</span><span class="p"></span>
+q)meta t
+c   | t f a
+----| -----
+ints| j
+syms| s
+flts| f
+e   | b
+s   | C
+t   | f
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
@@ -1031,8 +1031,6 @@ types (<a class="reference external" href="https://code.kx.com/q/basics/datatype
 
         <div class="meta">
             <div>
-                    <a href="/tag/qkdb.html" class="tag">q/KDB+</a>
-                    <a href="/tag/python.html" class="tag">python</a>
             </div>
         </div>
     </article>

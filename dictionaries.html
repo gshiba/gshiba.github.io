@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>q/KDB+ vs Python: Dictionaries | gshiba.github.io</title>
+        <title>Dictionaries | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -427,8 +427,8 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 <div class="container post">
     <article>
         <header>
-            <h1>q/KDB+ vs Python: Dictionaries</h1>
-            <time datetime="article.date.isoformat()" pubdate>September 2020</time>
+            <h1>Dictionaries</h1>
+            <time datetime="article.date.isoformat()" pubdate>Sep 2020</time>
         </header>
 
         <div class="article_content">
@@ -448,24 +448,24 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="ss">`a`b`c</span><span class="p">)</span><span class="o">!</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)d:(`a`b`c)!1 2 3
 
-<span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="p">((</span><span class="k">enlist</span><span class="w"> </span><span class="ss">`a</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="p">((</span><span class="k">enlist</span><span class="w"> </span><span class="ss">`b</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="p">((</span><span class="k">enlist</span><span class="w"> </span><span class="ss">`c</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w"></span>
-<span class="w">    </span><span class="p">)</span>
+q)d:(
+    ((enlist `a)!(enlist 1)),
+    ((enlist `b)!(enlist 2)),
+    ((enlist `c)!(enlist 3))
+    )
 
-<span class="gp">q)</span><span class="n">d</span><span class="w"></span>
-<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="p"></span>
-<span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
-<span class="n">c</span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="p"></span>
+q)d
+a| 1
+b| 2
+c| 3
 
-<span class="gp">q)</span><span class="n">d</span><span class="ss">`a</span><span class="w"></span>
-<span class="mi">1</span><span class="p"></span>
+q)d`a
+1
 
-<span class="gp">q)</span><span class="n">d</span><span class="ss">`x</span><span class="w"></span>
-<span class="mi">0N</span><span class="p"></span>
+q)d`x
+0N
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -501,17 +501,17 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">d</span><span class="ss">`a</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="w"> </span><span class="ss">`a</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="p">[</span><span class="ss">`a</span><span class="p">]</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="o">@</span><span class="ss">`a</span><span class="w"></span>
-<span class="mi">1</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)d`a
+q)d `a
+q)d[`a]
+q)d@`a
+1
 
-<span class="gp">q)</span><span class="n">d</span><span class="ss">`a`b</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="w"> </span><span class="ss">`a`b</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="p">[</span><span class="ss">`a`b</span><span class="p">]</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="o">@</span><span class="ss">`a`b</span><span class="w"></span>
-<span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
+q)d`a`b
+q)d `a`b
+q)d[`a`b]
+q)d@`a`b
+1 2
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
@@ -536,20 +536,20 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">e</span><span class="o">:</span><span class="p">(</span><span class="ss">`j`k`l`m</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)e:(`j`k`l`m)!(1 2 2 3)
 
-<span class="gp">q)</span><span class="n">e</span><span class="w"></span>
-<span class="n">j</span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="p"></span>
-<span class="n">k</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
-<span class="n">l</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
-<span class="n">m</span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="p"></span>
+q)e
+j| 1
+k| 2
+l| 2
+m| 3
 
 
-<span class="gp">q)</span><span class="n">e</span><span class="o">?</span><span class="mi">2</span><span class="w">  </span><span class="c1">// returns first match</span><span class="w"></span>
-<span class="ss">`k</span><span class="p"></span>
+q)e?2  // returns first match
+`k
 
-<span class="gp">q)</span><span class="n">e</span><span class="o">?</span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="ss">`m`k</span><span class="p"></span>
+q)e?3 2
+`m`k
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;jklm&#39;</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
@@ -582,12 +582,12 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="ss">`j`m</span><span class="o">#</span><span class="n">e</span><span class="w"></span>
-<span class="n">j</span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="p"></span>
-<span class="n">m</span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)`j`m#e
+j| 1
+m| 3
 
-<span class="gp">q)</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="ss">`k</span><span class="p">)</span><span class="o">#</span><span class="n">e</span><span class="w"></span>
-<span class="n">k</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
+q)(enlist `k)#e
+k| 2
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="s1">&#39;jm&#39;</span><span class="p">}</span>
@@ -610,12 +610,12 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">e</span><span class="p">[</span><span class="ss">`x</span><span class="p">]</span><span class="o">:</span><span class="mi">42</span><span class="w"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)e[`x]:42
 
-<span class="gp">q)</span><span class="n">e</span><span class="w"></span>
-<span class="n">l</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
-<span class="n">m</span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="p"></span>
-<span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="mi">42</span><span class="p"></span>
+q)e
+l| 2
+m| 3
+x| 42
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">e</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
@@ -636,16 +636,16 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">e</span><span class="o">:</span><span class="ss">`j`k`l`m</span><span class="o">!</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)e:`j`k`l`m!(1 2 2 3)
 
-<span class="gp">q)</span><span class="n">e</span><span class="o">:</span><span class="ss">`j`k</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="n">e</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">e</span><span class="w"></span>
-<span class="n">l</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
-<span class="n">m</span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="p"></span>
+q)e:`j`k _ e
+q)e
+l| 2
+m| 3
 
-<span class="gp">q)</span><span class="n">e</span><span class="o">:</span><span class="ss">`l</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="n">e</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">e</span><span class="w"></span>
-<span class="n">m</span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="p"></span>
+q)e:`l _ e
+q)e
+m| 3
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;jklm&#39;</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
@@ -670,14 +670,14 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">e</span><span class="o">:</span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="o">!</span><span class="ss">`j`k</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">e</span><span class="w"></span>
-<span class="mi">0</span><span class="o">|</span><span class="w"> </span><span class="n">j</span><span class="p"></span>
-<span class="mi">1</span><span class="o">|</span><span class="w"> </span><span class="n">k</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)e:(0 1)!`j`k
+q)e
+0| j
+1| k
 
-<span class="gp">q)</span><span class="n">e</span><span class="o">:</span><span class="mi">1</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="n">e</span><span class="w">  </span><span class="c1">// deletes one item</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">e</span><span class="w"></span>
-<span class="mi">1</span><span class="o">|</span><span class="w"> </span><span class="n">k</span><span class="p"></span>
+q)e:1 _ e  // deletes one item
+q)e
+1| k
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;k&#39;</span><span class="p">}</span>
@@ -703,16 +703,16 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">d1</span><span class="o">:</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="ss">`x</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d2</span><span class="o">:</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="ss">`y</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d1</span><span class="o">,</span><span class="n">d2</span><span class="w"></span>
-<span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="p"></span>
-<span class="n">y</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)d1:(enlist `x)!(enlist 1)
+q)d2:(enlist `y)!(enlist 2)
+q)d1,d2
+x| 1
+y| 2
 
-<span class="gp">q)</span><span class="n">d3</span><span class="o">:</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="ss">`x</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d4</span><span class="o">:</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="ss">`x</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="k">enlist</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d3</span><span class="o">,</span><span class="n">d4</span><span class="w"></span>
-<span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
+q)d3:(enlist `x)!(enlist 1)
+q)d4:(enlist `x)!(enlist 2)
+q)d3,d4
+x| 2
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">d1</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -739,17 +739,17 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">t</span><span class="o">:</span><span class="p">([]</span><span class="n">k</span><span class="o">:</span><span class="ss">`x`y</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
-<span class="gp">q)</span><span class="kd">exec</span><span class="w"> </span><span class="n">k</span><span class="o">!</span><span class="n">v</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="p"></span>
-<span class="n">y</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)t:([]k:`x`y; v:1 2)
+q)exec k!v from t
+x| 1
+y| 2
 
-<span class="c1">// Note duplicated key</span><span class="p"></span>
-<span class="gp">q)</span><span class="n">t</span><span class="o">:</span><span class="p">([]</span><span class="n">k</span><span class="o">:</span><span class="ss">`x`y`y</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"></span>
-<span class="gp">q)</span><span class="kd">exec</span><span class="w"> </span><span class="n">k</span><span class="o">!</span><span class="n">v</span><span class="w"> </span><span class="kn">from</span><span class="w"> </span><span class="n">t</span><span class="w"></span>
-<span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="p"></span>
-<span class="n">y</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
-<span class="n">y</span><span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="p"></span>
+// Note duplicated key
+q)t:([]k:`x`y`y; v:1 2 3)
+q)exec k!v from t
+x| 1
+y| 2
+y| 3
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;xy&#39;</span><span class="p">),</span> <span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
@@ -777,14 +777,14 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="ss">`j`j</span><span class="p">)</span><span class="o">!</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="w"></span>
-<span class="n">j</span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="p"></span>
-<span class="n">j</span><span class="o">|</span><span class="w"> </span><span class="mi">2</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)d:(`j`j)!1 2
+q)d
+j| 1
+j| 2
 
 
-<span class="gp">q)</span><span class="n">d</span><span class="ss">`j</span><span class="w">  </span><span class="c1">// only the first</span><span class="w"></span>
-<span class="mi">1</span><span class="p"></span>
+q)d`j  // only the first
+1
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="s1">&#39;j&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>  <span class="c1"># last one wins</span>
@@ -810,18 +810,18 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">longDict</span><span class="o">:</span><span class="p">(</span><span class="ss">`j`k`l</span><span class="p">)</span><span class="o">!</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)longDict:(`j`k`l)!1 2 3
 
-<span class="gp">q)</span><span class="n">longDict</span><span class="p">[</span><span class="ss">`m</span><span class="p">]</span><span class="o">:</span><span class="mf">4.2</span><span class="w">  </span><span class="c1">/ not allowed</span><span class="w"></span>
-<span class="o">&#39;</span><span class="k">type</span><span class="p"></span>
+q)longDict[`m]:4.2  / not allowed
+&#39;type
 
-<span class="gp">q)</span><span class="n">mixedDict</span><span class="o">:</span><span class="p">(</span><span class="ss">`j`k`l</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="mb">0b</span><span class="p">;</span><span class="w"> </span><span class="ss">`s</span><span class="p">)</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">mixedDict</span><span class="p">[</span><span class="ss">`m</span><span class="p">]</span><span class="o">:</span><span class="mf">4.2</span><span class="w">  </span><span class="c1">/ allowed</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">mixedDict</span><span class="w"></span>
-<span class="n">j</span><span class="o">|</span><span class="w"> </span><span class="mi">1</span><span class="p"></span>
-<span class="n">k</span><span class="o">|</span><span class="w"> </span><span class="mb">0b</span><span class="p"></span>
-<span class="n">l</span><span class="o">|</span><span class="w"> </span><span class="ss">`s</span><span class="p"></span>
-<span class="n">m</span><span class="o">|</span><span class="w"> </span><span class="mf">4.2</span><span class="p"></span>
+q)mixedDict:(`j`k`l)!(1; 0b; `s)
+q)mixedDict[`m]:4.2  / allowed
+q)mixedDict
+j| 1
+k| 0b
+l| `s
+m| 4.2
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -845,16 +845,16 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="ss">`j`k`l</span><span class="p">)</span><span class="o">!</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="ss">`notHere</span><span class="w"></span>
-<span class="mi">0N</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)d:(`j`k`l)!1 2 3
+q)d`notHere
+0N
 
-<span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="ss">`j`k`l</span><span class="p">)</span><span class="o">!</span><span class="ss">`a`b`c</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="ss">`notHere</span><span class="w"></span>
-<span class="ss">`</span><span class="p"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="o">:</span><span class="p">(</span><span class="ss">`j`k`l</span><span class="p">)</span><span class="o">!</span><span class="mb">101b</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">d</span><span class="ss">`notHere</span><span class="w"></span>
-<span class="mb">0b</span><span class="p"></span>
+q)d:(`j`k`l)!`a`b`c
+q)d`notHere
+`
+q)d:(`j`k`l)!101b
+q)d`notHere
+0b
 </pre></div>
 </div></td>
 <td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;not_here&#39;</span><span class="p">]</span>
@@ -871,8 +871,6 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 
         <div class="meta">
             <div>
-                    <a href="/tag/qkdb.html" class="tag">q/KDB+</a>
-                    <a href="/tag/python.html" class="tag">python</a>
             </div>
         </div>
     </article>

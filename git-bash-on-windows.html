@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Archives | gshiba.github.io</title>
+        <title>Git bash on Windows | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -424,44 +424,84 @@ h2:hover a.headerlink, h3:hover a.headerlink {
         </header>
 
         <div id="wrap">
-<div class="container list">
+<div class="container post">
     <article>
-        <h1 style="margin-bottom: 30px;">Tag: python</h1>
+        <header>
+            <h1>Git bash on Windows</h1>
+            <time datetime="article.date.isoformat()" pubdate>Feb 2021</time>
+        </header>
 
-        <ul class="double-list">
-            <li>
-                <a href='/qkdb-vs-python-lists.html'>
-                    <h2>q/KDB+ vs Python: Lists</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/qkdb-vs-python-ifelse.html'>
-                    <h2>q/KDB+ vs Python: if/else</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/qkdb-vs-python-dictionaries.html'>
-                    <h2>q/KDB+ vs Python: Dictionaries</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/qkdb-vs-pythonpandas-table-joins.html'>
-                    <h2>q/KDB+ vs Python/pandas: Table Joins</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/qkdb-vs-pythonpandas-tables.html'>
-                    <h2>q/KDB+ vs Python/pandas: Tables</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-        </ul>
+        <div class="article_content">
+            <p>Put this in your <code>~/.bashrc</code>:</p>
+<div class="highlight"><pre><span></span><span class="nb">set</span> -o vi
+<span class="nb">bind</span> <span class="s1">&#39;&quot;jk&quot;:vi-movement-mode&#39;</span>  <span class="c1"># map jk to &lt;esc&gt;</span>
+</pre></div>
+<p>This is the same as bash on unix or mac. To finde where your <code>~</code> (home) directory is, simpley open Git Bash and run:</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span>
+$ <span class="nb">pwd</span>
+&lt;your home directory will be printed here&gt;
+</pre></div>
+
+        </div>
+
+        <div class="meta">
+            <div>
+            </div>
+        </div>
     </article>
+
+
 </div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
         </div>
 <!--
     <footer>

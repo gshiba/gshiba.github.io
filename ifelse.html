@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>q/KDB+ vs Python: Lists | gshiba.github.io</title>
+        <title>if/else | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -427,8 +427,8 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 <div class="container post">
     <article>
         <header>
-            <h1>q/KDB+ vs Python: Lists</h1>
-            <time datetime="article.date.isoformat()" pubdate>September 2020</time>
+            <h1>if/else</h1>
+            <time datetime="article.date.isoformat()" pubdate>Sep 2020</time>
         </header>
 
         <div class="article_content">
@@ -440,120 +440,110 @@ For a comprehensive intro to q, check out <a class="reference external" href="ht
 <p><strong>Note</strong> q code snippets are edited to have line breaks for readability (my
 opinion; ymmv). Multiline statements do not work at the prompt, but they do work in scirpts. See <a class="reference external" href="https://code.kx.com/q4m3/10_Execution_Control/#103-scripts">docs</a>.</p>
 <p>Versions: q (3.6), python (3.7)</p>
-<div class="section" id="init">
-<h2>Init<a class="headerlink" href="#init" title="Permalink to this headline">*</a></h2>
+<div class="section" id="if">
+<h2>If<a class="headerlink" href="#if" title="Permalink to this headline">*</a></h2>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
 <col width="49%" />
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">x</span><span class="o">:</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">x</span><span class="w"></span>
-<span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)name:`bob
+q)x:0
 
-<span class="gp">q)</span><span class="k">til</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
-<span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p"></span>
+q)if[name=`bob;
+    x:x+1;  / run this
+    x+:1;   / run this too
+    x:x*10  / also this
+    ];
+
+q)x
+20
 </pre></div>
 </div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;bob&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;bob&#39;</span><span class="p">:</span>
+<span class="o">...</span>     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">10</span>
+
+
 <span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
-<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="mi">20</span>
 </pre></div>
 </div></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="section" id="process-items-in-a-list">
-<h2>Process items in a list<a class="headerlink" href="#process-items-in-a-list" title="Permalink to this headline">*</a></h2>
+<div class="section" id="id1">
+<h2>If/else<a class="headerlink" href="#id1" title="Permalink to this headline">*</a></h2>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
 <col width="49%" />
 <col width="51%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">til</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-<span class="mi">0</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="mi">25</span><span class="p"></span>
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)func:{[name]
+    y:0;
+    x:$[name=`foo;
+        0;
+      name=`bar;
+        [
+          y:9;
+          1
+          ]
+      name=`baz;
+        2
+      /else
+        3
+      ];
+    :x+y;
+    };
 
-<span class="gp">q)</span><span class="n">zeroIfEven</span><span class="o">:</span><span class="p">{</span><span class="o">?</span><span class="p">[</span><span class="mi">0</span><span class="o">=</span><span class="n">x</span><span class="w"> </span><span class="ow">mod</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="mi">0</span><span class="p">;</span><span class="n">x</span><span class="p">]}</span><span class="w"></span>
+q)func `foo
+0
 
+q)func `bar
+10
 
-<span class="gp">q)</span><span class="n">zeroIfEven</span><span class="w"> </span><span class="k">til</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
-<span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">9</span><span class="p"></span>
+q)func[`baz]  / square brackets optional
+2
+
+q)func[`qux]
+3
 </pre></div>
 </div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
-<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">...</span>     <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;foo&#39;</span><span class="p">:</span>
+<span class="o">...</span>         <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">...</span>     <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;bar&#39;</span><span class="p">:</span>
+<span class="o">...</span>         <span class="n">y</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="o">...</span>         <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;baz&#39;</span><span class="p">:</span>
+<span class="o">...</span>         <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">...</span>     <span class="k">else</span><span class="p">:</span>
+<span class="o">...</span>         <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">...</span>     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">zero_if_even</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">zero_if_even</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
-<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-</pre></div>
-</div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="slice">
-<h2>Slice<a class="headerlink" href="#slice" title="Permalink to this headline">*</a></h2>
-<table border="1" class="docutils align-center" style="width: 100%">
-<colgroup>
-<col width="49%" />
-<col width="51%" />
-</colgroup>
-<tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">x</span><span class="o">:</span><span class="ss">`zero`one`two</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">x</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="ss">`two`zero</span><span class="p"></span>
 
-<span class="gp">q)</span><span class="k">reverse</span><span class="w"> </span><span class="n">x</span><span class="w"></span>
-<span class="ss">`two`one`zero</span><span class="p"></span>
-</pre></div>
-</div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="p">[</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;zero&#39;</span><span class="p">]</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="p">[</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;zero&#39;</span><span class="p">]</span>
-</pre></div>
-</div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="filter">
-<h2>Filter<a class="headerlink" href="#filter" title="Permalink to this headline">*</a></h2>
-<table border="1" class="docutils align-center" style="width: 100%">
-<colgroup>
-<col width="49%" />
-<col width="51%" />
-</colgroup>
-<tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span><span class="gp">q)</span><span class="n">xs</span><span class="o">:</span><span class="ss">`zero`one`two`san</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">bs</span><span class="o">:</span><span class="mb">1101b</span><span class="w"></span>
-<span class="gp">q)</span><span class="n">xs</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">bs</span><span class="w"></span>
-<span class="ss">`zero`one`san</span><span class="p"></span>
 
-<span class="c1">/ Keep evens</span><span class="p"></span>
-<span class="gp">q)</span><span class="n">x</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="o">:</span><span class="k">til</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="ow">mod</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="mi">0</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">8</span><span class="p"></span>
-</pre></div>
-</div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;san&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">bs</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">bs</span><span class="p">)</span> <span class="k">if</span> <span class="n">b</span><span class="p">]</span>
-<span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;san&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">func</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="mi">0</span>
 
-<span class="c1"># Keep evens</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">_</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">func</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="mi">10</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">func</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">)</span>
+<span class="mi">2</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">func</span><span class="p">(</span><span class="s1">&#39;qux&#39;</span><span class="p">)</span>
+<span class="mi">3</span>
 </pre></div>
 </div></td>
 </tr>
@@ -565,8 +555,6 @@ opinion; ymmv). Multiline statements do not work at the prompt, but they do work
 
         <div class="meta">
             <div>
-                    <a href="/tag/qkdb.html" class="tag">q/KDB+</a>
-                    <a href="/tag/python.html" class="tag">python</a>
             </div>
         </div>
     </article>
