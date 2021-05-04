@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Table Joins | gshiba.github.io</title>
+        <title>q vs python: Gotchas | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -120,7 +120,7 @@ article header {
 article header h1 {
   margin-bottom: 2px;
   font-weight: 700;
-  color: #000;
+  color: #007EE5;
 }
 article header time {
   color: #9E9E9E;
@@ -193,6 +193,13 @@ article code {
   background-color: #EEE;
   border-radius: 0;
   font-size: 13px;
+}
+article div.highlight pre code {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-size: 11px;
+    white-space: pre; 
+    word-wrap: normal;
 }
 article .meta {
   font-size: 11px;
@@ -386,6 +393,46 @@ h2 a.headerlink, h3 a.headerlink {
 
 h2:hover a.headerlink, h3:hover a.headerlink {
     display: inline;
+}
+
+.container p.list-meta {
+    color: #AAA;
+}
+
+
+.container div.list-summary,
+.container.post div.article-summary {
+    /* font-style: italic; */
+    color: #444;
+}
+
+.container ul.articles-list {
+    list-style-type: none;
+}
+
+.container ul.articles-list p.article-title {
+    font-size: 24px;
+}
+
+.container ul.articles-list {
+    margin-top: 20px;
+}
+
+.container ul.articles-list li {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: #007EE5;
+    border-bottom-width: thin;
+    border-bottom-style: dashed;
+    text-align: center;
+}
+
+.container.post div.cover-image {
+  text-align: center;
+}
+
+.index p.cover-image {
+  text-align: center;
 }</style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -427,157 +474,51 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 <div class="container post">
     <article>
         <header>
-            <h1>Table Joins</h1>
-            <time datetime="article.date.isoformat()" pubdate>Sep 2020</time>
+            <h1>q vs python: Gotchas</h1>
+            <time datetime="article.date.isoformat()" pubdate>Feb 2021</time>
         </header>
 
         <div class="article_content">
-            <p>This cheat sheet is a list of code snippets that do the same thing in
-q and python -- something I wished existed when I first came to q/KDB+ from python.
-Note that in both languages, the code shown is sometimes not the most elegant or
-succinct; that's on purpose because I wanted to show the same constructs in both languages.
-For a comprehensive intro to q, check out <a class="reference external" href="https://code.kx.com/q4m3/">Q for Mortals</a>.</p>
-<p><strong>Note</strong> q code snippets are edited to have line breaks for readability (my
-opinion; ymmv). Multiline statements do not work at the prompt, but they do work in scirpts. See <a class="reference external" href="https://code.kx.com/q4m3/10_Execution_Control/#103-scripts">docs</a>.</p>
-<p>Versions: q (3.6), python (3.7)</p>
-<div class="section" id="init">
-<h2>Init<a class="headerlink" href="#init" title="Permalink to this headline">*</a></h2>
-<table border="1" class="docutils align-center" style="width: 100%">
-<colgroup>
-<col width="49%" />
-<col width="51%" />
-</colgroup>
-<tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)t1:([]k1:`a`b`c; v1:til 3)
 
-q)t2:([]k2:`a`X`c; v2:3+til 3)
+            <div class="article-summary">
+                <p class="first last">(Series) A side-by-side comparison of q/kdb+ and python for qbies (q newbies).</p>
 
-q)t1
-k1 v1
------
-a  0
-b  1
-c  2
+            </div>
 
-q)t2
-k2 v2
------
-a  3
-X  4
-c  5
+                <div class="cover-image">
+                    <img src="/static/cover_images/carbon-q-math.png" alt="Cover image">
+                </div>
+
+            <p>This post will continually get updated as I earn more burn scars...</p>
+<div class="section" id="order-of-precedence">
+<h2>Order of precedence<a class="headerlink" href="#order-of-precedence" title="Permalink to this headline">*</a></h2>
+<p>In <code>q</code>, an expression is evaluated right-to-left, (almost) always.</p>
+<p>See image above for some examples.</p>
+<p>Combined with in-line variable assignment, one can do things like:</p>
+<div class="highlight"><pre><span></span>q) n where 0 = (n:til 20) mod 3
+0 3 6 9 12 15 18
 </pre></div>
-</div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">),</span> <span class="n">v1</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">dg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">k2</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;aXc&#39;</span><span class="p">),</span> <span class="n">v2</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)))</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
-  <span class="n">k1</span>  <span class="n">v1</span>
-<span class="o">--------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="n">dg</span>
-  <span class="n">k2</span>  <span class="n">v2</span>
-<span class="o">--------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">3</span>
-<span class="mi">1</span>  <span class="n">X</span>   <span class="mi">4</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">5</span>
-</pre></div>
-</div></td>
-</tr>
-</tbody>
-</table>
 </div>
-<div class="section" id="join-and-concatenate">
-<h2>Join and Concatenate<a class="headerlink" href="#join-and-concatenate" title="Permalink to this headline">*</a></h2>
-<table border="1" class="docutils align-center" style="width: 100%">
-<colgroup>
-<col width="49%" />
-<col width="51%" />
-</colgroup>
-<tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span>// left-join
-q)t1 lj `k1 xkey `k1 xcol t2
-k1 v1 v2
---------
-a  0  3
-b  1
-c  2  5
+<div class="section" id="accidentally-creating-globals">
+<h2>Accidentally creating globals<a class="headerlink" href="#accidentally-creating-globals" title="Permalink to this headline">*</a></h2>
+<p>Watch out for typos that will create a global variable.</p>
+<div class="highlight"><pre><span></span>q) f:{[] symList:`a`b`c; synList,:`d; };  // typo!
 
-// concat side-by-side
-q)t1 ,&#39; t2
-k1 v1 k2 v2
------------
-a  0  a  3
-b  1  X  4
-c  2  c  5
+q) symList  // is undefined
+&#39;symList
 
-// concat one-below-the-other
-q)t1, `k1`v1 xcol t2
-
-k1 v1
------
-a  0
-b  1
-c  2
-a  3
-X  4
-c  5
-
-// concat side-by-side with dup col names
-// (second table wins)
-q)t1 ,&#39; `k1`v1 xcol t2
-k1 v1
------
-a  3
-X  4
-c  5
+q) synList  // is defined!
+,`d
 </pre></div>
-</div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="c1"># left-join</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;k1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dg</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;k2&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-  <span class="n">k1</span>  <span class="n">v1</span>   <span class="n">v2</span>
-<span class="o">-------------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>  <span class="mf">3.0</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>  <span class="n">NaN</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>  <span class="mf">5.0</span>
-
-<span class="c1"># concat side-by-side</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">dg</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-  <span class="n">k1</span>  <span class="n">v1</span> <span class="n">k2</span>  <span class="n">v2</span>
-<span class="o">---------------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>  <span class="n">a</span>   <span class="mi">3</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>  <span class="n">X</span>   <span class="mi">4</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>  <span class="n">c</span>   <span class="mi">5</span>
-
-<span class="c1"># concat one-below-the-other</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">dg</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">k2</span><span class="o">=</span><span class="s2">&quot;k1&quot;</span><span class="p">,</span> <span class="n">v2</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">))],</span>
-<span class="o">...</span>           <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-  <span class="n">k1</span>  <span class="n">v1</span>
-<span class="o">--------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>
-<span class="mi">3</span>  <span class="n">a</span>   <span class="mi">3</span>
-<span class="mi">4</span>  <span class="n">X</span>   <span class="mi">4</span>
-<span class="mi">5</span>  <span class="n">c</span>   <span class="mi">5</span>
-
-<span class="c1"># concat side-by-side with dup col names</span>
-<span class="c1"># (output has duplicated col names; don&#39;t do this)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">dg</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">k2</span><span class="o">=</span><span class="s2">&quot;k1&quot;</span><span class="p">,</span> <span class="n">v2</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">))],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-  <span class="n">k1</span>  <span class="n">v1</span> <span class="n">k1</span>  <span class="n">v1</span>
-<span class="o">---------------</span>
-<span class="mi">0</span>  <span class="n">a</span>   <span class="mi">0</span>  <span class="n">a</span>   <span class="mi">3</span>
-<span class="mi">1</span>  <span class="n">b</span>   <span class="mi">1</span>  <span class="n">X</span>   <span class="mi">4</span>
-<span class="mi">2</span>  <span class="n">c</span>   <span class="mi">2</span>  <span class="n">c</span>   <span class="mi">5</span>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+<span class="o">...</span>     <span class="n">sym_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]</span>
+<span class="o">...</span>     <span class="n">syn_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">)</span>  <span class="c1"># typo!</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="p">()</span>
+<span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;syn_list&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
 </pre></div>
-</div></td>
-</tr>
-</tbody>
-</table>
 </div>
+
 
         </div>
 

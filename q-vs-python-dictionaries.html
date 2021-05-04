@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Dictionaries | gshiba.github.io</title>
+        <title>q vs python: Dictionaries | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -120,7 +120,7 @@ article header {
 article header h1 {
   margin-bottom: 2px;
   font-weight: 700;
-  color: #000;
+  color: #007EE5;
 }
 article header time {
   color: #9E9E9E;
@@ -193,6 +193,13 @@ article code {
   background-color: #EEE;
   border-radius: 0;
   font-size: 13px;
+}
+article div.highlight pre code {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-size: 11px;
+    white-space: pre; 
+    word-wrap: normal;
 }
 article .meta {
   font-size: 11px;
@@ -386,6 +393,46 @@ h2 a.headerlink, h3 a.headerlink {
 
 h2:hover a.headerlink, h3:hover a.headerlink {
     display: inline;
+}
+
+.container p.list-meta {
+    color: #AAA;
+}
+
+
+.container div.list-summary,
+.container.post div.article-summary {
+    /* font-style: italic; */
+    color: #444;
+}
+
+.container ul.articles-list {
+    list-style-type: none;
+}
+
+.container ul.articles-list p.article-title {
+    font-size: 24px;
+}
+
+.container ul.articles-list {
+    margin-top: 20px;
+}
+
+.container ul.articles-list li {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: #007EE5;
+    border-bottom-width: thin;
+    border-bottom-style: dashed;
+    text-align: center;
+}
+
+.container.post div.cover-image {
+  text-align: center;
+}
+
+.index p.cover-image {
+  text-align: center;
 }</style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -427,18 +474,28 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 <div class="container post">
     <article>
         <header>
-            <h1>Dictionaries</h1>
+            <h1>q vs python: Dictionaries</h1>
             <time datetime="article.date.isoformat()" pubdate>Sep 2020</time>
         </header>
 
         <div class="article_content">
+
+            <div class="article-summary">
+                <p class="first last">(Series) A side-by-side comparison of q/kdb+ and python for qbies (q newbies).</p>
+
+            </div>
+
+                <div class="cover-image">
+                    <img src="/static/cover_images/carbon-q-dict.png" alt="Cover image">
+                </div>
+
             <p>This cheat sheet is a list of code snippets that do the same thing in
 q and python -- something I wished existed when I first came to q/KDB+ from python.
 Note that in both languages, the code shown is sometimes not the most elegant or
 succinct; that's on purpose because I wanted to show the same constructs in both languages.
 For a comprehensive intro to q, check out <a class="reference external" href="https://code.kx.com/q4m3/">Q for Mortals</a>.</p>
 <p><strong>Note</strong> q code snippets are edited to have line breaks for readability (my
-opinion; ymmv). Multiline statements do not work at the prompt, but they do work in scirpts. See <a class="reference external" href="https://code.kx.com/q4m3/10_Execution_Control/#103-scripts">docs</a>.</p>
+opinion; ymmv). Multiline statements do not work at the prompt, but they do work in scripts. See <a class="reference external" href="https://code.kx.com/q4m3/10_Execution_Control/#103-scripts">docs</a>.</p>
 <p>Versions: q (3.6), python (3.7)</p>
 <div class="section" id="basics">
 <h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">*</a></h2>
@@ -801,8 +858,8 @@ q)d`j  // only the first
 </tbody>
 </table>
 </div>
-<div class="section" id="dicts-have-types">
-<h3>Dicts have types<a class="headerlink" href="#dicts-have-types" title="Permalink to this headline">*</a></h3>
+<div class="section" id="q-dictionaries-have-types">
+<h3>q dictionaries have types<a class="headerlink" href="#q-dictionaries-have-types" title="Permalink to this headline">*</a></h3>
 <p>Except when they don't.</p>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
@@ -838,7 +895,8 @@ m| 4.2
 </div>
 <div class="section" id="missing-keys">
 <span id="dict-missing-keys"></span><h3>Missing keys<a class="headerlink" href="#missing-keys" title="Permalink to this headline">*</a></h3>
-<p>The last example (boolean) is arguably the most dangerous.</p>
+<p>The last example (boolean) is arguably the most dangerous, because there are no
+nulls for the boolean type.</p>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
 <col width="49%" />
@@ -852,6 +910,7 @@ q)d`notHere
 q)d:(`j`k`l)!`a`b`c
 q)d`notHere
 `
+
 q)d:(`j`k`l)!101b
 q)d`notHere
 0b
@@ -866,6 +925,7 @@ q)d`notHere
 </table>
 </div>
 </div>
+
 
         </div>
 

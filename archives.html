@@ -120,7 +120,7 @@ article header {
 article header h1 {
   margin-bottom: 2px;
   font-weight: 700;
-  color: #000;
+  color: #007EE5;
 }
 article header time {
   color: #9E9E9E;
@@ -193,6 +193,13 @@ article code {
   background-color: #EEE;
   border-radius: 0;
   font-size: 13px;
+}
+article div.highlight pre code {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-size: 11px;
+    white-space: pre; 
+    word-wrap: normal;
 }
 article .meta {
   font-size: 11px;
@@ -386,6 +393,46 @@ h2 a.headerlink, h3 a.headerlink {
 
 h2:hover a.headerlink, h3:hover a.headerlink {
     display: inline;
+}
+
+.container p.list-meta {
+    color: #AAA;
+}
+
+
+.container div.list-summary,
+.container.post div.article-summary {
+    /* font-style: italic; */
+    color: #444;
+}
+
+.container ul.articles-list {
+    list-style-type: none;
+}
+
+.container ul.articles-list p.article-title {
+    font-size: 24px;
+}
+
+.container ul.articles-list {
+    margin-top: 20px;
+}
+
+.container ul.articles-list li {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: #007EE5;
+    border-bottom-width: thin;
+    border-bottom-style: dashed;
+    text-align: center;
+}
+
+.container.post div.cover-image {
+  text-align: center;
+}
+
+.index p.cover-image {
+  text-align: center;
 }</style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -433,56 +480,56 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 
         <ul class="double-list">
             <li>
-                <a href='/git-bash-on-windows.html'>
-                    <h2>Git bash on Windows</h2>
-                    <span>01.02.2021</span>
+                <a href='/how-to-imap-jk-esc-everywhere-outside-vim.html'>
+                    <h2>How to :imap jk &lt;Esc&gt; Everywhere Outside VIM</h2>
+                    <span>21.02.2021</span>
                 </a>
             </li>
             <li>
-                <a href='/bash.html'>
-                    <h2>bash</h2>
-                    <span>01.02.2021</span>
+                <a href='/how-to-set-up-airflow-20-with-postgresql.html'>
+                    <h2>How to set up Airflow 2.0 with PostgreSQL</h2>
+                    <span>25.04.2021</span>
                 </a>
             </li>
             <li>
-                <a href='/jupyter-notebook.html'>
-                    <h2>Jupyter Notebook</h2>
-                    <span>01.02.2021</span>
+                <a href='/how-to-set-up-an-ubuntu-vm-on-linode-for-development.html'>
+                    <h2>How to set up an Ubuntu VM on Linode for development</h2>
+                    <span>09.04.2021</span>
                 </a>
             </li>
             <li>
-                <a href='/other-gotchas.html'>
-                    <h2>Other Gotchas</h2>
+                <a href='/q-vs-python-gotchas.html'>
+                    <h2>q vs python: Gotchas</h2>
                     <span>15.02.2021</span>
                 </a>
             </li>
             <li>
-                <a href='/lists.html'>
-                    <h2>Lists</h2>
+                <a href='/q-vs-python-lists.html'>
+                    <h2>q vs python: Lists</h2>
                     <span>01.09.2020</span>
                 </a>
             </li>
             <li>
-                <a href='/ifelse.html'>
-                    <h2>if/else</h2>
+                <a href='/q-vs-python-ifelse.html'>
+                    <h2>q vs python: If/else</h2>
                     <span>01.09.2020</span>
                 </a>
             </li>
             <li>
-                <a href='/dictionaries.html'>
-                    <h2>Dictionaries</h2>
+                <a href='/q-vs-python-dictionaries.html'>
+                    <h2>q vs python: Dictionaries</h2>
                     <span>01.09.2020</span>
                 </a>
             </li>
             <li>
-                <a href='/table-joins.html'>
-                    <h2>Table Joins</h2>
+                <a href='/q-vs-python-tables-joins.html'>
+                    <h2>q vs python: Tables joins</h2>
                     <span>01.09.2020</span>
                 </a>
             </li>
             <li>
-                <a href='/tables.html'>
-                    <h2>Tables</h2>
+                <a href='/q-vs-python-tables.html'>
+                    <h2>q vs python: Tables</h2>
                     <span>01.09.2020</span>
                 </a>
             </li>

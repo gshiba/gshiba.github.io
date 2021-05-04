@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Lists | gshiba.github.io</title>
+        <title>How to set up an Ubuntu VM on Linode for development | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -120,7 +120,7 @@ article header {
 article header h1 {
   margin-bottom: 2px;
   font-weight: 700;
-  color: #000;
+  color: #007EE5;
 }
 article header time {
   color: #9E9E9E;
@@ -193,6 +193,13 @@ article code {
   background-color: #EEE;
   border-radius: 0;
   font-size: 13px;
+}
+article div.highlight pre code {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-size: 11px;
+    white-space: pre; 
+    word-wrap: normal;
 }
 article .meta {
   font-size: 11px;
@@ -386,6 +393,46 @@ h2 a.headerlink, h3 a.headerlink {
 
 h2:hover a.headerlink, h3:hover a.headerlink {
     display: inline;
+}
+
+.container p.list-meta {
+    color: #AAA;
+}
+
+
+.container div.list-summary,
+.container.post div.article-summary {
+    /* font-style: italic; */
+    color: #444;
+}
+
+.container ul.articles-list {
+    list-style-type: none;
+}
+
+.container ul.articles-list p.article-title {
+    font-size: 24px;
+}
+
+.container ul.articles-list {
+    margin-top: 20px;
+}
+
+.container ul.articles-list li {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: #007EE5;
+    border-bottom-width: thin;
+    border-bottom-style: dashed;
+    text-align: center;
+}
+
+.container.post div.cover-image {
+  text-align: center;
+}
+
+.index p.cover-image {
+  text-align: center;
 }</style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -427,139 +474,194 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 <div class="container post">
     <article>
         <header>
-            <h1>Lists</h1>
-            <time datetime="article.date.isoformat()" pubdate>Sep 2020</time>
+            <h1>How to set up an Ubuntu VM on Linode for development</h1>
+            <time datetime="article.date.isoformat()" pubdate>Apr 2021</time>
         </header>
 
         <div class="article_content">
-            <p>This cheat sheet is a list of code snippets that do the same thing in
-q and python -- something I wished existed when I first came to q/KDB+ from python.
-Note that in both languages, the code shown is sometimes not the most elegant or
-succinct; that's on purpose because I wanted to show the same constructs in both languages.
-For a comprehensive intro to q, check out <a class="reference external" href="https://code.kx.com/q4m3/">Q for Mortals</a>.</p>
-<p><strong>Note</strong> q code snippets are edited to have line breaks for readability (my
-opinion; ymmv). Multiline statements do not work at the prompt, but they do work in scirpts. See <a class="reference external" href="https://code.kx.com/q4m3/10_Execution_Control/#103-scripts">docs</a>.</p>
-<p>Versions: q (3.6), python (3.7)</p>
-<div class="section" id="init">
-<h2>Init<a class="headerlink" href="#init" title="Permalink to this headline">*</a></h2>
-<table border="1" class="docutils align-center" style="width: 100%">
-<colgroup>
-<col width="49%" />
-<col width="51%" />
-</colgroup>
-<tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)x:1 2 3
-q)x
-1 2 3
 
-q)til 5
-0 1 2 3 4
-</pre></div>
-</div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
-<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-</pre></div>
-</div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="process-items-in-a-list">
-<h2>Process items in a list<a class="headerlink" href="#process-items-in-a-list" title="Permalink to this headline">*</a></h2>
-<table border="1" class="docutils align-center" style="width: 100%">
-<colgroup>
-<col width="49%" />
-<col width="51%" />
-</colgroup>
-<tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)5 + 10 * til 3
-0 15 25
-
-q)zeroIfEven:{?[0=x mod 2;0;x]}
+            <div class="article-summary">
+                <p>It turns out Docker doesn't support M1 Macs (yet). So I decided to rent a VM from Linode. It'll cost about $5/mo in a few months after the sign-up promo expires.</p>
+            </div>
 
 
-q)zeroIfEven til 10
-0 1 0 3 0 5 0 7 0 9
-</pre></div>
-</div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
-<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+            <h2>Goal</h2>
+<p>Get an Ubuntu VM and install basic development tools.</p>
+<p>Why not just use your own laptop?</p>
+<ul>
+<li>Maybe you're using an M1 Mac and can't install Docker.</li>
+<li>You want to try out a new database and don't want to risk messing up the system settings on your laptop.</li>
+<li>You're running low on disk space on our laptop.</li>
+<li>You want to start some process that needs to stay up 24/7 (like a web server).</li>
+</ul>
+<h2>Prerequisites</h2>
+<ul>
+<li>An account with <a href="https://www.linode.com/">Linode</a> (credit card required)</li>
+<li>An SSH Key added to your Linode account</li>
+</ul>
+<h2>Step 1: Get a Linode Virtual Machine</h2>
+<p>For this demo, I'll choose a Nanode.</p>
+<ul>
+<li>Ubuntu 20.04LTS</li>
+<li>1 CPU, 25GB Storage, 1GB RAM</li>
+<li>Remember to add SSH key</li>
+<li>Always use a strong password!</li>
+</ul>
+<p><img alt="image" src="images/create-a-linode.jpg"></p>
+<p>Once you click on the Create Linode button and the VM is provisioned, you can get its IP address:</p>
+<p><img alt="image" src="images/nanode-is-running.jpg"></p>
+<h2>Step 2: Create a user account and personalize</h2>
+<p>We will create a sudo-enabled user account, add our dot files, and install some basic tools.</p>
+<p>From your laptop, connect to your VM as root:</p>
+<div class="highlight"><pre><span></span><code>ssh root@139.xxx.xxx.xxx
+</code></pre></div>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">zero_if_even</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">zero_if_even</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
-<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-</pre></div>
-</div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="slice">
-<h2>Slice<a class="headerlink" href="#slice" title="Permalink to this headline">*</a></h2>
-<table border="1" class="docutils align-center" style="width: 100%">
-<colgroup>
-<col width="49%" />
-<col width="51%" />
-</colgroup>
-<tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)x:`zero`one`two
-q)x 2 0
-`two`zero
+<p>Then, create a user account and give it <code>sudo</code> powers:</p>
+<div class="highlight"><pre><span></span><code>sudo adduser gosuke  <span class="c1"># will ask for a password and other information</span>
+sudo usermod -aG sudo gosuke
+<span class="nb">logout</span>
+</code></pre></div>
 
-q)reverse x
-`two`one`zero
-</pre></div>
-</div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
-<span class="p">[</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;zero&#39;</span><span class="p">]</span>
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="p">[</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;zero&#39;</span><span class="p">]</span>
-</pre></div>
-</div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="filter">
-<h2>Filter<a class="headerlink" href="#filter" title="Permalink to this headline">*</a></h2>
-<table border="1" class="docutils align-center" style="width: 100%">
-<colgroup>
-<col width="49%" />
-<col width="51%" />
-</colgroup>
-<tbody valign="top">
-<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)xs:`zero`one`two`san
-q)bs:1101b
-q)xs where bs
-`zero`one`san
+<p>Now, log back in with the new user:</p>
+<div class="highlight"><pre><span></span><code>ssh gosuke@139.xxx.xxx.xxx
+</code></pre></div>
 
-/ Keep evens
-q)x where 0 = (x:til 10) mod 2
-0 2 4 6 8
-</pre></div>
-</div></td>
-<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;san&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">bs</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">bs</span><span class="p">)</span> <span class="k">if</span> <span class="n">b</span><span class="p">]</span>
-<span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;san&#39;</span><span class="p">]</span>
 
-<span class="c1"># Keep evens</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">_</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
-</pre></div>
-</div></td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>It's a good idea to <strong>secure your VM</strong> by (instructions and more can be found <a href="https://www.linode.com/docs/guides/securing-your-server">here</a>):</p>
+<ul>
+<li>Disallowing root logins over SSH</li>
+<li>Disabling SSH password authentication</li>
+</ul>
+<p>Finally, customize your shell etc to your liking. This is just an example of
+what I do. You may have a simpler or more elaborate set up (including better
+automation).</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;set -o vi&quot;</span> &gt;&gt; ~/.bashrc
+<span class="nb">echo</span> <span class="s2">&quot;bind &#39;\&quot;jk\&quot;:vi-movement-mode&#39;&quot;</span> &gt;&gt; ~/.bashrc
+<span class="nb">echo</span> <span class="s2">&quot;export VISUAL=vim&quot;</span> &gt;&gt; ~/.bashrc
+<span class="nb">echo</span> <span class="s2">&quot;export EDITOR=vim&quot;</span> &gt;&gt; ~/.bashrc
+
+<span class="nb">cd</span> ~
+git clone https://github.com/gshiba/homedir.git  <span class="c1"># un:gshiba pw:use personal access token</span>
+<span class="nb">cd</span> homedir
+ln -f -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.vimrc ~/.vimrc
+ln -f -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.tmux.conf ~/.tmux.conf
+ln -f -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.gitconfig ~/.gitconfig
+ln -f -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.gitignore_global ~/.gitignore_global
+
+ln -f -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.git-completion.bash ~/.git-completion.bash
+ln -f -s <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/.git-prompt.sh ~/.git-prompt.sh
+<span class="nb">echo</span> <span class="s2">&quot;source ~/.git-completion.bash&quot;</span> &gt;&gt; ~/.bashrc
+<span class="nb">echo</span> <span class="s2">&quot;source ~/.git-prompt.sh&quot;</span> &gt;&gt; ~/.bashrc
+
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vi   <span class="c1"># then execute :PluginInstall</span>
+
+<span class="nb">exit</span>
+</code></pre></div>
+
+
+<h2>Step 3: Install basic tools</h2>
+<p>In this section we will install:</p>
+<ul>
+<li>python</li>
+<li>docker</li>
+<li>docker-compose</li>
+<li>other tools such as: jq, tree, postgresql client</li>
+</ul>
+<p>First, connect to your VM:</p>
+<div class="highlight"><pre><span></span><code>ssh gosuke@139.xxx.xxx.xxx
+</code></pre></div>
+
+
+<h3>Install Python</h3>
+<p>It's useful to have python available system-wide.</p>
+<div class="highlight"><pre><span></span><code>sudo apt-get update
+sudo apt-get install --yes python3.8 python3-pip python3-venv
+<span class="nb">echo</span> <span class="s2">&quot;alias python=&#39;python3&#39;&quot;</span> &gt;&gt; ~/.bashrc
+<span class="nb">echo</span> <span class="s2">&quot;alias pip=&#39;pip3&#39;&quot;</span> &gt;&gt; ~/.bashrc
+pip3 install black  <span class="c1"># used by vim</span>
+<span class="nb">exit</span>  <span class="c1"># then log back in</span>
+</code></pre></div>
+
+
+<p>Notes:</p>
+<ul>
+<li>We need to manually install python here because Ubuntu 20.04LTS doesn't ship with it.</li>
+<li>Ubuntu's package manager doesn't include venv (virtualenv) with python.</li>
+<li>Tip: <code>$ type CMD</code> will reveal what <code>CMD</code> is <code>alias</code>ed to</li>
+</ul>
+<p>Reminder on how to to use venv (more on the <a href="https://docs.python.org/3/library/venv.html">offical docs</a>):</p>
+<div class="highlight"><pre><span></span><code>$ mkdir -p /path/to/project
+$ <span class="nb">cd</span> /path/to/project
+$ python -m venv venv
+$ ls
+.  ..  .git  venv
+$ <span class="nb">source</span> venv/bin/activate
+<span class="o">(</span>venv<span class="o">)</span>$ which python
+/path/to/project/venv/bin/python
+<span class="o">(</span>venv<span class="o">)</span>$ deactivate
+$
+</code></pre></div>
+
+
+<h3>Install Docker</h3>
+<p>Install Docker by following <a href="https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository">the docs</a>:</p>
+<div class="highlight"><pre><span></span><code>sudo apt-get update
+sudo apt-get install --yes <span class="se">\</span>
+    apt-transport-https <span class="se">\</span>
+    ca-certificates <span class="se">\</span>
+    curl <span class="se">\</span>
+    gnupg <span class="se">\</span>
+    lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+<span class="nb">echo</span> <span class="se">\</span>
+<span class="s2">&quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \</span>
+<span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> stable&quot;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+sudo apt-get update
+sudo apt-get install --yes docker-ce docker-ce-cli containerd.io
+</code></pre></div>
+
+
+<p>We want our user account to be able to manage Docker, so adjust user
+permissions
+(<a href="https://docs.docker.com/engine/install/linux-postinstall/">source</a>):</p>
+<div class="highlight"><pre><span></span><code>sudo usermod -aG docker gosuke
+newgrp docker
+<span class="nb">exit</span>  <span class="c1"># then log back in</span>
+</code></pre></div>
+
+
+<p>Test Docker by running the Hello World image</p>
+<div class="highlight"><pre><span></span><code>$ docker run --rm hello-world
+...
+Hello from Docker!
+...
+</code></pre></div>
+
+
+<h3>Install Docker-compose</h3>
+<p>Install <a href="https://docs.docker.com/compose/install/">Docker-compose</a>:</p>
+<div class="highlight"><pre><span></span><code>curl -L <span class="s2">&quot;https://github.com/docker/compose/releases/download/1.28.6/docker-compose-</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname -m<span class="k">)</span><span class="s2">&quot;</span> -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+</code></pre></div>
+
+
+<p>Test Docker Compose:</p>
+<div class="highlight"><pre><span></span><code>$ docker-compose --version
+docker-compose version <span class="m">1</span>.28.6, build 5db8d86f
+</code></pre></div>
+
+
+<h3>Install other CLI tools not shipped with Ubuntu</h3>
+<p>Ubuntu comes with a lot of CLI tools I use, but there are still a few missing. YMMV.</p>
+<div class="highlight"><pre><span></span><code>sudo apt-get install --yes jq postgresql-client tree
+</code></pre></div>
+
+
+<h2>Conclusion</h2>
+<p>Congratulations 🎉 You now have a basic development VM where you're free to experiment.</p>
 
         </div>
 

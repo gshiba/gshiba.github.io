@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Tables | gshiba.github.io</title>
+        <title>q vs python: Tables | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -120,7 +120,7 @@ article header {
 article header h1 {
   margin-bottom: 2px;
   font-weight: 700;
-  color: #000;
+  color: #007EE5;
 }
 article header time {
   color: #9E9E9E;
@@ -193,6 +193,13 @@ article code {
   background-color: #EEE;
   border-radius: 0;
   font-size: 13px;
+}
+article div.highlight pre code {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-size: 11px;
+    white-space: pre; 
+    word-wrap: normal;
 }
 article .meta {
   font-size: 11px;
@@ -386,6 +393,46 @@ h2 a.headerlink, h3 a.headerlink {
 
 h2:hover a.headerlink, h3:hover a.headerlink {
     display: inline;
+}
+
+.container p.list-meta {
+    color: #AAA;
+}
+
+
+.container div.list-summary,
+.container.post div.article-summary {
+    /* font-style: italic; */
+    color: #444;
+}
+
+.container ul.articles-list {
+    list-style-type: none;
+}
+
+.container ul.articles-list p.article-title {
+    font-size: 24px;
+}
+
+.container ul.articles-list {
+    margin-top: 20px;
+}
+
+.container ul.articles-list li {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: #007EE5;
+    border-bottom-width: thin;
+    border-bottom-style: dashed;
+    text-align: center;
+}
+
+.container.post div.cover-image {
+  text-align: center;
+}
+
+.index p.cover-image {
+  text-align: center;
 }</style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -427,18 +474,28 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 <div class="container post">
     <article>
         <header>
-            <h1>Tables</h1>
+            <h1>q vs python: Tables</h1>
             <time datetime="article.date.isoformat()" pubdate>Sep 2020</time>
         </header>
 
         <div class="article_content">
+
+            <div class="article-summary">
+                <p class="first last">(Series) A side-by-side comparison of q/kdb+ and python for qbies (q newbies).</p>
+
+            </div>
+
+                <div class="cover-image">
+                    <img src="/static/cover_images/carbon-q-table.png" alt="Cover image">
+                </div>
+
             <p>This cheat sheet is a list of code snippets that do the same thing in
 q and python -- something I wished existed when I first came to q/KDB+ from python.
 Note that in both languages, the code shown is sometimes not the most elegant or
 succinct; that's on purpose because I wanted to show the same constructs in both languages.
 For a comprehensive intro to q, check out <a class="reference external" href="https://code.kx.com/q4m3/">Q for Mortals</a>.</p>
 <p><strong>Note</strong> q code snippets are edited to have line breaks for readability (my
-opinion; ymmv). Multiline statements do not work at the prompt, but they do work in scirpts. See <a class="reference external" href="https://code.kx.com/q4m3/10_Execution_Control/#103-scripts">docs</a>.</p>
+opinion; ymmv). Multiline statements do not work at the prompt, but they do work in scripts. See <a class="reference external" href="https://code.kx.com/q4m3/10_Execution_Control/#103-scripts">docs</a>.</p>
 <p>Versions: q (3.6), python (3.7)</p>
 <div class="section" id="init">
 <h2>Init<a class="headerlink" href="#init" title="Permalink to this headline">*</a></h2>
@@ -614,7 +671,7 @@ one two san
 <div class="section" id="gotchas-missing-column">
 <h2>Gotchas: missing column<a class="headerlink" href="#gotchas-missing-column" title="Permalink to this headline">*</a></h2>
 <p>Be careful when selecting columns like you would from a dictionary (which is what tables are).
-Similar to <a class="reference external" href="qkdb-vs-python-dictionaries.html#dict-missing-keys">dictionaries</a>, missing
+Similar to <a class="reference external" href="q-vs-python-dictionaries.html#missing-keys">dictionaries</a>, missing
 columns will return an empty list of the first column's type.</p>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
@@ -888,8 +945,8 @@ ints syms flts
 </tbody>
 </table>
 </div>
-<div class="section" id="adding-new-columns">
-<h2>Adding new columns<a class="headerlink" href="#adding-new-columns" title="Permalink to this headline">*</a></h2>
+<div class="section" id="add-new-columns">
+<h2>Add new columns<a class="headerlink" href="#add-new-columns" title="Permalink to this headline">*</a></h2>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
 <col width="49%" />
@@ -920,13 +977,69 @@ ints syms flts a  b
 </tbody>
 </table>
 </div>
-<div class="section" id="adding-columns-using-functions">
-<h2>Adding columns using functions<a class="headerlink" href="#adding-columns-using-functions" title="Permalink to this headline">*</a></h2>
+<div class="section" id="select-rows-of-a-keyed-table">
+<h2>Select rows of a keyed table<a class="headerlink" href="#select-rows-of-a-keyed-table" title="Permalink to this headline">*</a></h2>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)t:([k:`a1`a2`a3]
+      v:til 3;
+      w:`m`n`o)
+q)t
+k | v w
+--| ---
+a1| 0 m
+a2| 1 n
+a3| 2 o
+
+q)t`a1  # returns a dictionary
+v| 0
+w| `m
+
+
+q)t ([]k:`a1`a3)
+v w
+---
+0 m
+2 o
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">w</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;mno&quot;</span><span class="p">),</span>
+                           <span class="n">k</span><span class="o">=</span><span class="s2">&quot;a1 a2 a3&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span>
+    <span class="n">v</span>  <span class="n">w</span>
+<span class="n">k</span>
+<span class="n">a1</span>  <span class="mi">0</span>  <span class="n">m</span>
+<span class="n">a2</span>  <span class="mi">1</span>  <span class="n">n</span>
+<span class="n">a3</span>  <span class="mi">2</span>  <span class="n">o</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;a1&#39;</span><span class="p">]</span>  <span class="c1"># returns a pd.Series</span>
+<span class="n">v</span>    <span class="mi">0</span>
+<span class="n">w</span>    <span class="n">m</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a1</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;a1&#39;</span><span class="p">,</span> <span class="s1">&#39;a2&#39;</span><span class="p">]]</span>
+    <span class="n">v</span>  <span class="n">w</span>
+<span class="n">k</span>
+<span class="n">a1</span>  <span class="mi">0</span>  <span class="n">m</span>
+<span class="n">a2</span>  <span class="mi">1</span>  <span class="n">n</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="add-columns-using-functions">
+<h2>Add columns using functions<a class="headerlink" href="#add-columns-using-functions" title="Permalink to this headline">*</a></h2>
 <p>On the q side, the <code>even</code> and <code>total</code> functions are called with vectors (which you
 can check by including a <code>show</code> statement like <code>even:{show x;0=x
 mod 2}</code>, while the <code>strJoin</code> is called with &quot;each&quot; <code>'</code> (i.e. one
 row at a time).</p>
-<p>This is the same on the python side. Both <code>even</code> and <code>total</code> are <code>numpy</code>-vectorized.</p>
+<p>This is the same on the python side. Both <code>even</code> and <code>total</code> perform vectorized <code>numpy</code> operations.</p>
 <table border="1" class="docutils align-center" style="width: 100%">
 <colgroup>
 <col width="49%" />
@@ -977,8 +1090,8 @@ ints syms flts e s        t
 </tbody>
 </table>
 </div>
-<div class="section" id="inspecting-column-types">
-<h2>Inspecting column types<a class="headerlink" href="#inspecting-column-types" title="Permalink to this headline">*</a></h2>
+<div class="section" id="inspect-column-types">
+<h2>Inspect column types<a class="headerlink" href="#inspect-column-types" title="Permalink to this headline">*</a></h2>
 <p>Reference on <code>meta</code> (<a class="reference external" href="https://code.kx.com/q/ref/meta/">link</a>) and data
 types (<a class="reference external" href="https://code.kx.com/q/basics/datatypes/">link</a>).</p>
 <table border="1" class="docutils align-center" style="width: 100%">
@@ -1026,6 +1139,30 @@ t   | f
 </tbody>
 </table>
 </div>
+<div class="section" id="create-an-empty-table">
+<h2>Create an empty table<a class="headerlink" href="#create-an-empty-table" title="Permalink to this headline">*</a></h2>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)`a`b`c!()
+a b c
+-----
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">Empty</span> <span class="n">DataFrame</span>
+<span class="n">Columns</span><span class="p">:</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
+<span class="n">Index</span><span class="p">:</span> <span class="p">[]</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+
 
         </div>
 

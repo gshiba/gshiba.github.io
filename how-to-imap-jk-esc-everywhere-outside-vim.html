@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>gshiba.github.io - q/KDB+ vs Python for Python/pandas users category | gshiba.github.io</title>
+        <title>How to :imap jk &lt;Esc&gt; Everywhere Outside VIM | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -120,7 +120,7 @@ article header {
 article header h1 {
   margin-bottom: 2px;
   font-weight: 700;
-  color: #000;
+  color: #007EE5;
 }
 article header time {
   color: #9E9E9E;
@@ -193,6 +193,13 @@ article code {
   background-color: #EEE;
   border-radius: 0;
   font-size: 13px;
+}
+article div.highlight pre code {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-size: 11px;
+    white-space: pre; 
+    word-wrap: normal;
 }
 article .meta {
   font-size: 11px;
@@ -386,6 +393,46 @@ h2 a.headerlink, h3 a.headerlink {
 
 h2:hover a.headerlink, h3:hover a.headerlink {
     display: inline;
+}
+
+.container p.list-meta {
+    color: #AAA;
+}
+
+
+.container div.list-summary,
+.container.post div.article-summary {
+    /* font-style: italic; */
+    color: #444;
+}
+
+.container ul.articles-list {
+    list-style-type: none;
+}
+
+.container ul.articles-list p.article-title {
+    font-size: 24px;
+}
+
+.container ul.articles-list {
+    margin-top: 20px;
+}
+
+.container ul.articles-list li {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: #007EE5;
+    border-bottom-width: thin;
+    border-bottom-style: dashed;
+    text-align: center;
+}
+
+.container.post div.cover-image {
+  text-align: center;
+}
+
+.index p.cover-image {
+  text-align: center;
 }</style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -424,83 +471,189 @@ h2:hover a.headerlink, h3:hover a.headerlink {
         </header>
 
         <div id="wrap">
-<div class="container index">
+<div class="container post">
+    <article>
+        <header>
+            <h1>How to :imap jk &lt;Esc&gt; Everywhere Outside VIM</h1>
+            <time datetime="article.date.isoformat()" pubdate>Feb 2021</time>
+        </header>
+
+        <div class="article_content">
+
+            <div class="article-summary">
+                <p class="first last">It is impossible for me to write code without vim mode and this mapping.
+This post is a reminder on how do this mapping in: bash, jupyter notebook, joplin, and vscode.</p>
+
+            </div>
+
+                <div class="cover-image">
+                    <img src="/static/cover_images/carbon-imap-jk.png" alt="Cover image">
+                </div>
+
+            <div class="section" id="bash">
+<h2>Bash<a class="headerlink" href="#bash" title="Permalink to this headline">*</a></h2>
+<p>Put this in your <code>~/.bashrc</code>:</p>
+<div class="highlight"><pre><span></span><span class="nb">set</span> -o vi
+<span class="nb">bind</span> <span class="s1">&#39;&quot;jk&quot;:vi-movement-mode&#39;</span>  <span class="c1"># map jk to &lt;esc&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="git-bash-windows">
+<h2>Git Bash (Windows)<a class="headerlink" href="#git-bash-windows" title="Permalink to this headline">*</a></h2>
+<p>Put this in your <code>~/.bashrc</code>:</p>
+<div class="highlight"><pre><span></span><span class="nb">set</span> -o vi
+<span class="nb">bind</span> <span class="s1">&#39;&quot;jk&quot;:vi-movement-mode&#39;</span>  <span class="c1"># map jk to &lt;esc&gt;</span>
+</pre></div>
+<p>This is the same as bash on unix or mac.</p>
+<p>To find where your <code>~</code> (home) directory is, simpley open Git Bash and run:</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span>
+$ <span class="nb">pwd</span>
+&lt;your home directory will be printed here&gt;
+</pre></div>
+</div>
+<div class="section" id="visual-studio-code">
+<h2>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Permalink to this headline">*</a></h2>
+<p>In VS Code, open the Command Palette and search for &quot;Preferences: Open Settings (JSON)&quot;.</p>
+<p>Enter the following:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;vim.insertModeKeyBindings&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;before&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;j&quot;</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">],</span>
+      <span class="nt">&quot;after&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&lt;Esc&gt;&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+<p>You may also enjoy turning on relative line numbering:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;vim.smartRelativeLine&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="joplin-mac-desktop-app">
+<h2>Joplin (Mac Desktop app)<a class="headerlink" href="#joplin-mac-desktop-app" title="Permalink to this headline">*</a></h2>
+<p>I switched from Evernote to Joplin near the end of 2020, because Evernote
+stopped supporting local-only notebooks.</p>
+<p>After enabling vim mode in the settings, type this while in the markdown editor:</p>
+<pre class="literal-block">
+:imap jk &lt;Esc&gt;
+</pre>
+<p>Note that you will need to do this manually everytime you open the Joplin app.</p>
+</div>
+<div class="section" id="jupyter-notebook">
+<h2>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">*</a></h2>
+<div class="section" id="tl-dr">
+<h3>tl;dr<a class="headerlink" href="#tl-dr" title="Permalink to this headline">*</a></h3>
+<p>Put <a class="reference external" href="https://gist.github.com/gshiba/6b1c0b3689fd218ad8b2243d2944a689">this</a> in your <code>~/.jupyter/custom/custom.js</code>.</p>
+</div>
+<div class="section" id="my-desired-behavior">
+<h3>My desired behavior<a class="headerlink" href="#my-desired-behavior" title="Permalink to this headline">*</a></h3>
+<p>Here's my desired behavior in Jupyter Notebook:</p>
+<pre class="literal-block">
++------------------------------------+         +------------------------------------+
+|          Vim command mode          |         |       Notebook command mode        |
+|            (in a cell)             |         |   (interact with notebook cells)   |
++------------------------------------+  Enter  +------------------------------------+
+|  * jkhl Move d/u/l/r               |  &lt;----  |   * j/k   Next/previous cell       |
+|  * yy   Yank current line          |  ----&gt;  |   * a/b   Insert cell above/below  |
+|  * p    Paste                      |   Esc   |   * c/x/v Copy/cut/paste cell      |
+|  * gg   Jump to first line in cell |         |   * ...                            |
+|  * /    Search                     |         +------------------------------------+
+|  * ...                             |
++------------------------------------+
+
+                |   ^
+        oOiIcCs |   |  jk or Esc
+                v   |
+
++------------------------------------+
+|           Vim insert mode          |
++------------------------------------+
+</pre>
+</div>
+<div class="section" id="details">
+<h3>Details<a class="headerlink" href="#details" title="Permalink to this headline">*</a></h3>
+<p>This <a class="reference external" href="https://gist.github.com/gshiba/6b1c0b3689fd218ad8b2243d2944a689">custom.js</a> will:</p>
+<ol class="arabic simple">
+<li>Enable CodeMirror's Vim binding</li>
+<li>Create menu items in Jupyter Notebook frontend so you can choose between default and vi mode (optional)</li>
+<li>Customize CodeMirror to enable the transition from [Vim command mode] to [Notebook command mode]</li>
+<li>Customize CodeMirror to map jk to Esc</li>
+</ol>
+<p>Place it in your <code>~/.jupyter/custom/custom.js</code>.</p>
+</div>
+<div class="section" id="appendix-and-credit">
+<h3>Appendix and credit<a class="headerlink" href="#appendix-and-credit" title="Permalink to this headline">*</a></h3>
+<p>I started on IPython Notebook, which later became Jupyter Notebook, and when I
+wanted to use vim bindings in it, I relied on the
+<a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions">jupyter_contrib_nbextensions</a>'s <a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tree/master/src/jupyter_contrib_nbextensions/nbextensions/select_keymap">select_keymap</a> extension (I forked it to remap jk).</p>
+<p>Fast-forward to today (2020) with a new job and a fresh hardward to install stuff on,
+I find that activity on the nbextensions repo has mostly died down since
+<a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions/graphs/code-frequency">2018</a>. I didn't want to install an un-maintained package with many extensions
+that I don't use, so I pulled out just the ones I needed.</p>
+<p>Based on git blame, credit goes to <a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions/blame/master/src/jupyter_contrib_nbextensions/nbextensions/select_keymap/main.js">&#64;aiguofer</a> for this extension. Thanks!</p>
+</div>
+</div>
 
 
+        </div>
 
-    <h1>q/KDB+ vs Python for Python/pandas users</h1>
-
-
-            <ul>
-                <li>
-                    <a href="/tables.html">Tables</a>
-                </li>
-            </ul>
-
-
-            <ul>
-                <li>
-                    <a href="/table-joins.html">Table Joins</a>
-                </li>
-            </ul>
-
-
-            <ul>
-                <li>
-                    <a href="/dictionaries.html">Dictionaries</a>
-                </li>
-            </ul>
-
-
-            <ul>
-                <li>
-                    <a href="/ifelse.html">if/else</a>
-                </li>
-            </ul>
-
-
-            <ul>
-                <li>
-                    <a href="/lists.html">Lists</a>
-                </li>
-            </ul>
-
-
-            <ul>
-                <li>
-                    <a href="/other-gotchas.html">Other Gotchas</a>
-                </li>
-            </ul>
-
-
-
-    <h1>vim map jk to Esc everywhere</h1>
-
-
-            <ul>
-                <li>
-                    <a href="/jupyter-notebook.html">Jupyter Notebook</a>
-                </li>
-            </ul>
-
-
-            <ul>
-                <li>
-                    <a href="/bash.html">bash</a>
-                </li>
-            </ul>
-
-
-            <ul>
-                <li>
-                    <a href="/git-bash-on-windows.html">Git bash on Windows</a>
-                </li>
-            </ul>
-
-
+        <div class="meta">
+            <div>
+            </div>
+        </div>
+    </article>
 
 
 </div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
 
         </div>
 <!--

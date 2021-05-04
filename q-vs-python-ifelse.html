@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Other Gotchas | gshiba.github.io</title>
+        <title>q vs python: If/else | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -120,7 +120,7 @@ article header {
 article header h1 {
   margin-bottom: 2px;
   font-weight: 700;
-  color: #000;
+  color: #007EE5;
 }
 article header time {
   color: #9E9E9E;
@@ -193,6 +193,13 @@ article code {
   background-color: #EEE;
   border-radius: 0;
   font-size: 13px;
+}
+article div.highlight pre code {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-size: 11px;
+    white-space: pre; 
+    word-wrap: normal;
 }
 article .meta {
   font-size: 11px;
@@ -386,6 +393,46 @@ h2 a.headerlink, h3 a.headerlink {
 
 h2:hover a.headerlink, h3:hover a.headerlink {
     display: inline;
+}
+
+.container p.list-meta {
+    color: #AAA;
+}
+
+
+.container div.list-summary,
+.container.post div.article-summary {
+    /* font-style: italic; */
+    color: #444;
+}
+
+.container ul.articles-list {
+    list-style-type: none;
+}
+
+.container ul.articles-list p.article-title {
+    font-size: 24px;
+}
+
+.container ul.articles-list {
+    margin-top: 20px;
+}
+
+.container ul.articles-list li {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: #007EE5;
+    border-bottom-width: thin;
+    border-bottom-style: dashed;
+    text-align: center;
+}
+
+.container.post div.cover-image {
+  text-align: center;
+}
+
+.index p.cover-image {
+  text-align: center;
 }</style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -427,21 +474,140 @@ h2:hover a.headerlink, h3:hover a.headerlink {
 <div class="container post">
     <article>
         <header>
-            <h1>Other Gotchas</h1>
-            <time datetime="article.date.isoformat()" pubdate>Feb 2021</time>
+            <h1>q vs python: If/else</h1>
+            <time datetime="article.date.isoformat()" pubdate>Sep 2020</time>
         </header>
 
         <div class="article_content">
-            <div class="section" id="accidentally-creating-globals">
-<h2>Accidentally creating globals<a class="headerlink" href="#accidentally-creating-globals" title="Permalink to this headline">*</a></h2>
-<p>Watchout for typos that will create a global vairable.</p>
-<div class="highlight"><pre><span></span>q) f:{[] symList:`a`b`c; synList,:`d; };  // notice the typo?
-q) symList
-&#39;symList
-q) synList
-,`d
+
+            <div class="article-summary">
+                <p class="first last">(Series) A side-by-side comparison of q/kdb+ and python for qbies (q newbies).</p>
+
+            </div>
+
+                <div class="cover-image">
+                    <img src="/static/cover_images/carbon-q-if-else.png" alt="Cover image">
+                </div>
+
+            <p>This cheat sheet is a list of code snippets that do the same thing in
+q and python -- something I wished existed when I first came to q/KDB+ from python.
+Note that in both languages, the code shown is sometimes not the most elegant or
+succinct; that's on purpose because I wanted to show the same constructs in both languages.
+For a comprehensive intro to q, check out <a class="reference external" href="https://code.kx.com/q4m3/">Q for Mortals</a>.</p>
+<p><strong>Note</strong> q code snippets are edited to have line breaks for readability (my
+opinion; ymmv). Multiline statements do not work at the prompt, but they do work in scripts. See <a class="reference external" href="https://code.kx.com/q4m3/10_Execution_Control/#103-scripts">docs</a>.</p>
+<p>Versions: q (3.6), python (3.7)</p>
+<div class="section" id="if">
+<h2>If<a class="headerlink" href="#if" title="Permalink to this headline">*</a></h2>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)name:`bob
+q)x:0
+
+q)if[name=`bob;
+    x:x+1;  / run this
+    x+:1;   / run this too
+    x:x*10  / also this
+    ];
+
+q)x
+20
 </pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;bob&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;bob&#39;</span><span class="p">:</span>
+<span class="o">...</span>     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">10</span>
+
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+<span class="mi">20</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="section" id="if-else">
+<h2>If/else<a class="headerlink" href="#if-else" title="Permalink to this headline">*</a></h2>
+<table border="1" class="docutils align-center" style="width: 100%">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><div class="first last"><div class="highlight"><pre><span></span>q)func:{[name]
+    y:0;
+    x:$[name=`foo;
+        0;
+      name=`bar;
+        [
+          y:9;
+          1
+          ]
+      name=`baz;
+        2
+      /else
+        3
+      ];
+    :x+y;
+    };
+
+q)func `foo
+0
+
+q)func `bar
+10
+
+q)func[`baz]  / square brackets optional
+2
+
+q)func[`qux]
+3
+</pre></div>
+</div></td>
+<td><div class="first last"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">...</span>     <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;foo&#39;</span><span class="p">:</span>
+<span class="o">...</span>         <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">...</span>     <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;bar&#39;</span><span class="p">:</span>
+<span class="o">...</span>         <span class="n">y</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="o">...</span>         <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;baz&#39;</span><span class="p">:</span>
+<span class="o">...</span>         <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">...</span>     <span class="k">else</span><span class="p">:</span>
+<span class="o">...</span>         <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">...</span>     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+
+
+
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">func</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="mi">0</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">func</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="mi">10</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">func</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">)</span>
+<span class="mi">2</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">func</span><span class="p">(</span><span class="s1">&#39;qux&#39;</span><span class="p">)</span>
+<span class="mi">3</span>
+</pre></div>
+</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+
 
         </div>
 

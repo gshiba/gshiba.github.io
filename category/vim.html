@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>OSS contributions | gshiba.github.io</title>
+        <title>gshiba.github.io - vim category | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -120,7 +120,7 @@ article header {
 article header h1 {
   margin-bottom: 2px;
   font-weight: 700;
-  color: #000;
+  color: #007EE5;
 }
 article header time {
   color: #9E9E9E;
@@ -193,6 +193,13 @@ article code {
   background-color: #EEE;
   border-radius: 0;
   font-size: 13px;
+}
+article div.highlight pre code {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    font-size: 11px;
+    white-space: pre; 
+    word-wrap: normal;
 }
 article .meta {
   font-size: 11px;
@@ -386,6 +393,46 @@ h2 a.headerlink, h3 a.headerlink {
 
 h2:hover a.headerlink, h3:hover a.headerlink {
     display: inline;
+}
+
+.container p.list-meta {
+    color: #AAA;
+}
+
+
+.container div.list-summary,
+.container.post div.article-summary {
+    /* font-style: italic; */
+    color: #444;
+}
+
+.container ul.articles-list {
+    list-style-type: none;
+}
+
+.container ul.articles-list p.article-title {
+    font-size: 24px;
+}
+
+.container ul.articles-list {
+    margin-top: 20px;
+}
+
+.container ul.articles-list li {
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: #007EE5;
+    border-bottom-width: thin;
+    border-bottom-style: dashed;
+    text-align: center;
+}
+
+.container.post div.cover-image {
+  text-align: center;
+}
+
+.index p.cover-image {
+  text-align: center;
 }</style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -424,19 +471,27 @@ h2:hover a.headerlink, h3:hover a.headerlink {
         </header>
 
         <div id="wrap">
-<div class="container post">
+<div class="container index">
 
-    <article>
-        <header>
-            <h1>OSS contributions</h1>
-        </header>
+    <ul class="articles-list">
+            <li>
+                <p class="article-title">
+                    <a href="/how-to-imap-jk-esc-everywhere-outside-vim.html">How to :imap jk &lt;Esc&gt; Everywhere Outside VIM</a>
+                </p>
+                <p class="list-meta">
+                    Published: 2021-02-21
+                </p>
+                <div class="list-summary"> <p class="first last">It is impossible for me to write code without vim mode and this mapping.
+This post is a reminder on how do this mapping in: bash, jupyter notebook, joplin, and vscode.</p>
+ </div>
+                    <p class="cover-image">
+                        <img src="/static/cover_images/carbon-imap-jk.png" alt="Cover image">
+                    </p>
+            </li>
+    </ul>
 
-        <div class="article_content">
-            
-        </div>
-
-    </article>
 </div>
+
         </div>
 <!--
     <footer>
