@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Archives | gshiba.github.io</title>
+        <title>How to get started with node.js | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -471,83 +471,174 @@ h2:hover a.headerlink, h3:hover a.headerlink {
         </header>
 
         <div id="wrap">
-<div class="container list">
+<div class="container post">
     <article>
-        <h1 style="margin-bottom: 30px;">Archives and tags</h1>
+        <header>
+            <h1>How to get started with node.js</h1>
+            <time datetime="article.date.isoformat()" pubdate>May 2021</time>
+        </header>
 
-        <div class="meta" style="margin-bottom: 30px;">
+        <div class="article_content">
+
+            <div class="article-summary">
+                <p>I had the opportunity to help a friend enrolled in a code bootcamp. Their
+language ecosystem of choice was node.js which I had never experience with, so I had to
+quickly familiarize myself with the basics. I document the basics here just in case
+I ever need to do this again.</p>
+            </div>
+
+
+            <h2>Install</h2>
+<p>Following the (alternative) guide from <a href="https://nodejs.org/en/download/package-manager/">nodejs.org</a>:</p>
+<div class="highlight"><pre><span></span><code>$ brew install node
+...
+</code></pre></div>
+
+
+<p>Here are the versions I have as of this writing (spring 2021):</p>
+<div class="highlight"><pre><span></span><code>$ which npm
+/usr/local/bin/npm
+
+$  npm -v
+<span class="m">7</span>.6.3
+
+$ which node
+/usr/local/bin/node
+
+$ node -v
+v15.12.0
+</code></pre></div>
+
+
+<h2>Create a project</h2>
+<p>Create and initialize a project:</p>
+<div class="highlight"><pre><span></span><code>$ mkdir proj
+$ <span class="nb">cd</span> proj
+$ npm init
+...
+
+$ ls
+package.json
+</code></pre></div>
+
+
+<p>Install the <a href="https://www.npmjs.com/package/request">request</a> package:</p>
+<div class="highlight"><pre><span></span><code>$ npm install request
+...
+
+$ cat package.json
+<span class="o">{</span>
+  <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;proj&quot;</span>,
+  <span class="s2">&quot;version&quot;</span>: <span class="s2">&quot;1.0.0&quot;</span>,
+  <span class="s2">&quot;description&quot;</span>: <span class="s2">&quot;&quot;</span>,
+  <span class="s2">&quot;main&quot;</span>: <span class="s2">&quot;index.js&quot;</span>,
+  <span class="s2">&quot;scripts&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;test&quot;</span>: <span class="s2">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span>
+  <span class="o">}</span>,
+  <span class="s2">&quot;author&quot;</span>: <span class="s2">&quot;&quot;</span>,
+  <span class="s2">&quot;license&quot;</span>: <span class="s2">&quot;ISC&quot;</span>,
+  <span class="s2">&quot;dependencies&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;request&quot;</span>: <span class="s2">&quot;^2.88.2&quot;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+
+<h2>REPL</h2>
+<p>Start REPL:</p>
+<div class="highlight"><pre><span></span><code>$ node
+Welcome to Node.js v15.12.0.
+Type <span class="s2">&quot;.help&quot;</span> <span class="k">for</span> more information.
+&gt;
+</code></pre></div>
+
+
+<p>Within REPL:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="mi">5</span>
+
+<span class="o">&gt;</span> <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;3 + 2 = &#39;</span><span class="p">,</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+<span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">undefined</span>
+
+<span class="o">&gt;</span><span class="p">.</span><span class="n">exit</span>
+</code></pre></div>
+
+
+<h2>Run a script</h2>
+<div class="highlight"><pre><span></span><code>$ cat script.js
+const <span class="nv">request</span> <span class="o">=</span> require<span class="o">(</span><span class="s1">&#39;request&#39;</span><span class="o">)</span><span class="p">;</span>
+request<span class="o">(</span><span class="s2">&quot;http://worldtimeapi.org/api/timezone/America/Vancouver&quot;</span>, <span class="o">(</span>error, resp, body<span class="o">)</span> <span class="o">=</span>&gt; <span class="o">{</span>
+    console.log<span class="o">(</span><span class="s1">&#39;time is: &#39;</span>, JSON.parse<span class="o">(</span>body<span class="o">)[</span><span class="s2">&quot;datetime&quot;</span><span class="o">])</span><span class="p">;</span>
+<span class="o">})</span><span class="p">;</span>
+
+$ node script.js
+<span class="nb">time</span> is:  <span class="m">2021</span>-05-03T23:37:36.240126-07:00
+</code></pre></div>
+
+
+<p>This was enough to help the friend with loops, data structures, and simple call-backs.</p>
+
         </div>
 
-        <ul class="double-list">
-            <li>
-                <a href='/how-to-imap-jk-esc-everywhere-outside-vim.html'>
-                    <h2>How to :imap jk &lt;Esc&gt; Everywhere Outside VIM</h2>
-                    <span>21.02.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/how-to-get-started-with-nodejs.html'>
-                    <h2>How to get started with node.js</h2>
-                    <span>02.05.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/how-to-set-up-airflow-20-with-postgresql.html'>
-                    <h2>How to set up Airflow 2.0 with PostgreSQL</h2>
-                    <span>25.04.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/how-to-set-up-an-ubuntu-vm-on-linode-for-development.html'>
-                    <h2>How to set up an Ubuntu VM on Linode for development</h2>
-                    <span>09.04.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/where-to-find-google-backup-and-sync-preferences.html'>
-                    <h2>Where to find Google Backup and Sync preferences</h2>
-                    <span>06.05.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-gotchas.html'>
-                    <h2>q vs python: Gotchas</h2>
-                    <span>15.02.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-lists.html'>
-                    <h2>q vs python: Lists</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-ifelse.html'>
-                    <h2>q vs python: If/else</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-dictionaries.html'>
-                    <h2>q vs python: Dictionaries</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-tables-joins.html'>
-                    <h2>q vs python: Tables joins</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-tables.html'>
-                    <h2>q vs python: Tables</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-        </ul>
+        <div class="meta">
+            <div>
+            </div>
+        </div>
     </article>
+
+
 </div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
         </div>
 <!--
     <footer>

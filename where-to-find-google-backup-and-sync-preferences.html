@@ -6,7 +6,7 @@
         <meta name="author" content="Gosuke Shibahara">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Archives | gshiba.github.io</title>
+        <title>Where to find Google Backup and Sync preferences | gshiba.github.io</title>
 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -471,83 +471,123 @@ h2:hover a.headerlink, h3:hover a.headerlink {
         </header>
 
         <div id="wrap">
-<div class="container list">
+<div class="container post">
     <article>
-        <h1 style="margin-bottom: 30px;">Archives and tags</h1>
+        <header>
+            <h1>Where to find Google Backup and Sync preferences</h1>
+            <time datetime="article.date.isoformat()" pubdate>May 2021</time>
+        </header>
 
-        <div class="meta" style="margin-bottom: 30px;">
+        <div class="article_content">
+
+            <div class="article-summary">
+                <p>Backup and Sync's Preferences are stored in a sqlite file. Full paths of the monitored folders can be found there.</p>
+            </div>
+
+
+            <p><img alt="image" src="images/google-b-and-s.png"></p>
+<p>As shown above, the Preferences GUI only shows the folder name instead of the entire path, which makes it
+annoying to tell the differences between <code>.../photos/2020</code> and
+<code>.../videos/2020</code> which is how I like to keep things organized.</p>
+<p>Here's where to look:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/Library/Application Support/Google/Drive/user_default
+
+$ sqlite3 sync_config.db 
+SQLite version <span class="m">3</span>.32.3 <span class="m">2020</span>-06-18 <span class="m">14</span>:16:19
+Enter <span class="s2">&quot;.help&quot;</span> <span class="k">for</span> usage hints.
+
+sqlite&gt; .schema
+CREATE TABLE data <span class="o">(</span>entry_key TEXT, data_key TEXT, data_value TEXT, UNIQUE <span class="o">(</span>entry_key, data_key, data_value<span class="o">))</span><span class="p">;</span>
+
+sqlite&gt; <span class="k">select</span> data_value from data where <span class="nv">entry_key</span> <span class="o">=</span> <span class="s1">&#39;root_config__0&#39;</span> order by data_key asc<span class="p">;</span>
+/Users/gosuke/Pictures/photos
+/Volumes/home/photos/2020
+/Volumes/home/photos/2021
+/Volumes/home/videos/2019
+/Volumes/home/videos/2020
+/Volumes/home/videos/2021
+
+sqlite&gt; .quit
+</code></pre></div>
+
+
+<p>Ok, but the sort order isn't quite right...</p>
+<p>Let's do this instead:</p>
+<div class="highlight"><pre><span></span><code>$ sqlite3 sync_config.db  <span class="s2">&quot;select data_value from data where entry_key = &#39;root_config__0&#39;;&quot;</span> <span class="se">\</span>
+  <span class="p">|</span> awk -F/ -v <span class="nv">OFS</span><span class="o">=</span><span class="s1">&#39;\t&#39;</span> <span class="s1">&#39;{print $NF,$0}&#39;</span> <span class="p">|</span> sort 
+<span class="m">2019</span>    /Volumes/home/videos/2019
+<span class="m">2020</span>    /Volumes/home/photos/2020
+<span class="m">2020</span>    /Volumes/home/videos/2020
+<span class="m">2021</span>    /Volumes/home/photos/2021
+<span class="m">2021</span>    /Volumes/home/videos/2021
+photos  /Users/gosuke/Pictures/photos
+</code></pre></div>
+
+
+<p>(I've checked that this is the correcting sorting based on folder size)</p>
+<p><img alt="image" src="images/google-b-and-s-zoom.png"></p>
+<p>Versions: MacOS BigSur, Backup and Sync 3.55</p>
+
         </div>
 
-        <ul class="double-list">
-            <li>
-                <a href='/how-to-imap-jk-esc-everywhere-outside-vim.html'>
-                    <h2>How to :imap jk &lt;Esc&gt; Everywhere Outside VIM</h2>
-                    <span>21.02.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/how-to-get-started-with-nodejs.html'>
-                    <h2>How to get started with node.js</h2>
-                    <span>02.05.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/how-to-set-up-airflow-20-with-postgresql.html'>
-                    <h2>How to set up Airflow 2.0 with PostgreSQL</h2>
-                    <span>25.04.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/how-to-set-up-an-ubuntu-vm-on-linode-for-development.html'>
-                    <h2>How to set up an Ubuntu VM on Linode for development</h2>
-                    <span>09.04.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/where-to-find-google-backup-and-sync-preferences.html'>
-                    <h2>Where to find Google Backup and Sync preferences</h2>
-                    <span>06.05.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-gotchas.html'>
-                    <h2>q vs python: Gotchas</h2>
-                    <span>15.02.2021</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-lists.html'>
-                    <h2>q vs python: Lists</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-ifelse.html'>
-                    <h2>q vs python: If/else</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-dictionaries.html'>
-                    <h2>q vs python: Dictionaries</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-tables-joins.html'>
-                    <h2>q vs python: Tables joins</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-            <li>
-                <a href='/q-vs-python-tables.html'>
-                    <h2>q vs python: Tables</h2>
-                    <span>01.09.2020</span>
-                </a>
-            </li>
-        </ul>
+        <div class="meta">
+            <div>
+            </div>
+        </div>
     </article>
+
+
 </div>
+
+<style type="text/css">
+{
+    max-width: 700px;
+}
+
+.text_cell .prompt {
+    display: none;
+}
+
+div.cell {
+    padding: 0;
+}
+
+div.text_cell_render {
+    padding: 0;
+}
+
+div.prompt {
+    font-size: 13px;
+}
+
+div.input_prompt {
+    padding: .7em 0.2em;
+}
+
+div.output_prompt {
+    padding: .4em .2em;
+}
+
+div.input_area {
+    margin: .2em 0.4em;
+    max-width: 580px;
+}
+
+table.dataframe {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+table.dataframe th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+pre code {
+    background-color: inherit;
+}</style>
+
         </div>
 <!--
     <footer>
