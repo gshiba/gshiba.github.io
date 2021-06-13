@@ -741,6 +741,17 @@ by replacing <code>-h localhost</code> with your Linode's IP address, like: <cod
 </tr>
 </tbody>
 </table>
+<p>To reset a user's password, log in as admin user, then issue <code>\password</code></p>
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> psql -h localhost -p <span class="m">5432</span> -U postgres
+
+<span class="gp">postgres=#</span> <span class="kp">\password</span> <span class="ss">USER</span>
+<span class="go">Enter new password: </span>
+<span class="go">Enter it again:</span>
+
+<span class="gp">postgres=#</span> <span class="kp">\q</span>
+</code></pre></div>
+
+
 <h3>Step 3b. Create a database for airflow</h3>
 <p>Start the psql client:</p>
 <div class="highlight"><pre><span></span><code>$ psql -h localhost -p <span class="m">5432</span> -U postgres
