@@ -529,6 +529,11 @@ $ <span class="nb">pwd</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<div class="section" id="jupyter-notebook">
+<h2>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">*</a></h2>
+<img alt="Alternative text" src="images/jupyter-vim.png" style="width: 700px;" />
+<p>See <a class="reference external" href="https://github.com/gshiba/jupyter-notebook-extension">https://github.com/gshiba/jupyter-notebook-extension</a></p>
+</div>
 <div class="section" id="joplin-mac-desktop-app">
 <h2>Joplin (Mac Desktop app)<a class="headerlink" href="#joplin-mac-desktop-app" title="Permalink to this headline">*</a></h2>
 <p>I switched from Evernote to Joplin near the end of 2020, because Evernote
@@ -538,60 +543,6 @@ stopped supporting local-only notebooks.</p>
 :imap jk &lt;Esc&gt;
 </pre>
 <p>Note that you will need to do this manually everytime you open the Joplin app.</p>
-</div>
-<div class="section" id="jupyter-notebook">
-<h2>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">*</a></h2>
-<div class="section" id="tl-dr">
-<h3>tl;dr<a class="headerlink" href="#tl-dr" title="Permalink to this headline">*</a></h3>
-<p>Put <a class="reference external" href="https://gist.github.com/gshiba/6b1c0b3689fd218ad8b2243d2944a689">this</a> in your <code>~/.jupyter/custom/custom.js</code>.</p>
-</div>
-<div class="section" id="my-desired-behavior">
-<h3>My desired behavior<a class="headerlink" href="#my-desired-behavior" title="Permalink to this headline">*</a></h3>
-<p>Here's my desired behavior in Jupyter Notebook:</p>
-<pre class="literal-block">
-+------------------------------------+         +------------------------------------+
-|          Vim command mode          |         |       Notebook command mode        |
-|            (in a cell)             |         |   (interact with notebook cells)   |
-+------------------------------------+  Enter  +------------------------------------+
-|  * jkhl Move d/u/l/r               |  &lt;----  |   * j/k   Next/previous cell       |
-|  * yy   Yank current line          |  ----&gt;  |   * a/b   Insert cell above/below  |
-|  * p    Paste                      |   Esc   |   * c/x/v Copy/cut/paste cell      |
-|  * gg   Jump to first line in cell |         |   * ...                            |
-|  * /    Search                     |         +------------------------------------+
-|  * ...                             |
-+------------------------------------+
-
-                |   ^
-        oOiIcCs |   |  jk or Esc
-                v   |
-
-+------------------------------------+
-|           Vim insert mode          |
-+------------------------------------+
-</pre>
-</div>
-<div class="section" id="details">
-<h3>Details<a class="headerlink" href="#details" title="Permalink to this headline">*</a></h3>
-<p>This <a class="reference external" href="https://gist.github.com/gshiba/6b1c0b3689fd218ad8b2243d2944a689">custom.js</a> will:</p>
-<ol class="arabic simple">
-<li>Enable CodeMirror's Vim binding</li>
-<li>Create menu items in Jupyter Notebook frontend so you can choose between default and vi mode (optional)</li>
-<li>Customize CodeMirror to enable the transition from [Vim command mode] to [Notebook command mode]</li>
-<li>Customize CodeMirror to map jk to Esc</li>
-</ol>
-<p>Place it in your <code>~/.jupyter/custom/custom.js</code>.</p>
-</div>
-<div class="section" id="appendix-and-credit">
-<h3>Appendix and credit<a class="headerlink" href="#appendix-and-credit" title="Permalink to this headline">*</a></h3>
-<p>I started on IPython Notebook, which later became Jupyter Notebook, and when I
-wanted to use vim bindings in it, I relied on the
-<a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions">jupyter_contrib_nbextensions</a>'s <a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tree/master/src/jupyter_contrib_nbextensions/nbextensions/select_keymap">select_keymap</a> extension (I forked it to remap jk).</p>
-<p>Fast-forward to today (2020) with a new job and a fresh hardward to install stuff on,
-I find that activity on the nbextensions repo has mostly died down since
-<a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions/graphs/code-frequency">2018</a>. I didn't want to install an un-maintained package with many extensions
-that I don't use, so I pulled out just the ones I needed.</p>
-<p>Based on git blame, credit goes to <a class="reference external" href="https://github.com/ipython-contrib/jupyter_contrib_nbextensions/blame/master/src/jupyter_contrib_nbextensions/nbextensions/select_keymap/main.js">&#64;aiguofer</a> for this extension. Thanks!</p>
-</div>
 </div>
 
 
